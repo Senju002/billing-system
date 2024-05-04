@@ -50,7 +50,7 @@ export default function Login({ status, canResetPassword }) {
             <form onSubmit={submit}>
                 <div>
                     <div className="flex flex-col items-center mb-10 ">
-                        <ApplicationLogo className="mt-10 mb-5" />
+                        <ApplicationLogo className="mt-10" />
                         {/* <h1 className="text-3xl font-thin ">Billing System</h1> */}
                     </div>
 
