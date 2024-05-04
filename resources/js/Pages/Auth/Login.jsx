@@ -111,7 +111,8 @@ export default function Login({ status, canResetPassword }) {
 
                     <Button
                         className="ml-4 bg-primary"
-                        disabled={processing}
+                        // disabled={processing}
+                        loading={processing}
                         onClick={submit}
                     >
                         Log in

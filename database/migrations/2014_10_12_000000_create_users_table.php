@@ -17,10 +17,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->enum('role', ['SUPER ADMIN', 'ADMIN', 'OWNER']);
+            // $table->unsignedBigInteger('apartment_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            // Define foreign key constraint
+            // $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');;
         });
     }
 

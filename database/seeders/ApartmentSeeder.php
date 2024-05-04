@@ -27,7 +27,8 @@ class ApartmentSeeder extends Seeder
             Apartment::create([
                 'name' => $faker->company,
                 'address' => $faker->address,
-                'created_by' => 1, // Assuming there are 10 users
+                'role' => 'SUPER ADMIN',
+                'created_by' => 1,
             ]);
         }
     }
