@@ -1,7 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import {
-    Button,
     Card,
     Typography,
     CardBody,
@@ -15,6 +14,8 @@ import { useEffect } from "react";
 import moment from "moment";
 import Pagination from "@/Components/Pagination";
 import PageHeader from "@/Components/PageHeader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TABLE_HEAD = [
     "Nama Apartemen",
@@ -25,7 +26,6 @@ const TABLE_HEAD = [
 ];
 
 export default function Apartement({ auth, errors, data, filters }) {
-    console.log(data.data);
     const { flash } = usePage().props;
 
     function handleSearch(event) {
@@ -51,6 +51,12 @@ export default function Apartement({ auth, errors, data, filters }) {
     }
 
     const buttonIcon = <FolderPlusIcon strokeWidth={2} className="h-4 w-4" />;
+
+    useEffect(() => {
+        if (flash.message) {
+            toast.success(flash.message);
+        }
+    }, [flash.message]);
 
     return (
         <AuthenticatedLayout
@@ -89,7 +95,7 @@ export default function Apartement({ auth, errors, data, filters }) {
                                 description={"Informasi Data Apartememen"}
                                 buttonLabel={"Tambah Apartemen"}
                                 icon={buttonIcon}
-                                addRoute={"dashboard"}
+                                addRoute={"apartement.add"}
                                 label="Cari Nama Apartemen"
                             />
                             <CardBody className="overflow-scroll px-0">
@@ -234,6 +240,7 @@ export default function Apartement({ auth, errors, data, filters }) {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </AuthenticatedLayout>
     );
 }

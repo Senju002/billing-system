@@ -36,7 +36,11 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     // !Apartement
+    Route::get('/apartement/add', function () {
+        return Inertia::render('Apartement/AddApartement');
+    })->name('apartement.add');
     Route::get('/apartement', [ApartementController::class, 'index'])->name('apartement.index');
+    Route::post('/apartement/store', [ApartementController::class, 'store'])->name('apartement.store');
 
 
 
