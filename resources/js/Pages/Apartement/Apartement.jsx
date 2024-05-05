@@ -185,12 +185,12 @@ export default function Apartement({ auth, errors, data, filters }) {
 
                                                         <td className={classes}>
                                                             <Link
-                                                                // href={route(
-                                                                //     "edit.series",
-                                                                //     {
-                                                                //         id: id,
-                                                                //     }
-                                                                // )}
+                                                                href={route(
+                                                                    "apartement.edit",
+                                                                    {
+                                                                        id: id,
+                                                                    }
+                                                                )}
                                                                 method="get"
                                                                 data={{
                                                                     id: undefined,

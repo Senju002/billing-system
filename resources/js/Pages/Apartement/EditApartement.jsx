@@ -1,6 +1,6 @@
 import PageHeader from "@/Components/PageHeader";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import {
     Breadcrumbs,
     Button,
@@ -9,16 +9,18 @@ import {
     Input,
 } from "@material-tailwind/react";
 
-export default function AddApartement({ auth }) {
+export default function EditApartement({ auth, apartementData }) {
     const { data, setData, post, processing, errors } = useForm({
-        name: "",
-        address: "",
+        name: apartementData.name,
+        address: apartementData.address,
     });
+
+    const dataID = apartementData.id;
 
     // ! Handle submit
     function handleSubmit(e) {
         e.preventDefault();
-        post("/apartement/store");
+        post(`/apartement/${dataID}/update`);
     }
 
     return (
@@ -27,11 +29,11 @@ export default function AddApartement({ auth }) {
             errors={errors}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Add Apartement
+                    Edit Apartement
                 </h2>
             }
         >
-            <Head title="Add Apartement" />
+            <Head title="Edit Apartement" />
 
             <div className="py-12">
                 <div className="max-w-1xl mx-auto sm:px-6 lg:px-8 w-full">
@@ -49,20 +51,20 @@ export default function AddApartement({ auth }) {
                             Apartement
                         </Link>
                         <Link
-                            href={route("apartement.add")}
+                            href={route("apartement.edit", {
+                                id: dataID,
+                            })}
                             className="opacity-100 text-primary font-bold"
                         >
-                            Add Apartement
+                            Edit Apartement
                         </Link>
                         <a href="#"></a>
                     </Breadcrumbs>
                     <div className="bg-white overflow-hidden sm:rounded-lg shadow-[0_1px_100px_#c3b0f7] h-full">
                         <Card className=" p-12 h-full w-full">
                             <PageHeader
-                                title={"New Apartement Data"}
-                                description={
-                                    "Tambah Informasi Apartemen yang Baru"
-                                }
+                                title={"Edit Apartement Data"}
+                                description={"Edit Informasi Apartemen"}
                                 label="Cari Nama Apartemen"
                                 showSearch={false}
                             />
@@ -122,7 +124,7 @@ export default function AddApartement({ auth }) {
                                                 className="bg-green-500"
                                                 loading={processing}
                                             >
-                                                Tambah Data
+                                                Edit Data
                                             </Button>
                                         </div>
                                     </div>

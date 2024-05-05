@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function () {
     })->name('apartement.add');
     Route::get('/apartement', [ApartementController::class, 'index'])->name('apartement.index');
     Route::post('/apartement/store', [ApartementController::class, 'store'])->name('apartement.store');
+    Route::get('/apartement/{id}/edit', [ApartementController::class, 'edit'])->name('apartement.edit');
+    Route::post('/apartement/{id}/update', [ApartementController::class, 'update'])->name('apartement.update');
 
 
 

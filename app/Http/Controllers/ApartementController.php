@@ -45,6 +45,30 @@ class ApartementController extends Controller
         // Store the validated data in the apartments table
         $apartment = Apartment::create($validatedData);
 
-        return redirect('/apartement')->with('success', 'New data has been created!');
+        return redirect('/apartement')->with('success', 'Apartement data has been created!');
+    }
+
+    public function edit(Apartment $apartment, Request $request)
+    {
+        return Inertia::render('Apartement/EditApartement', [
+            "apartementData" => $apartment->find($request->id),
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Find the apartment by its ID
+        $apartment = Apartment::findOrFail($id);
+
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'address' => ['required', 'string', 'max:100'],
+        ]);
+
+        // Update the apartment with the validated data
+        $apartment->update($validatedData);
+
+        return redirect('/apartement')->with('success', 'Apartment data has been updated!');
     }
 }
