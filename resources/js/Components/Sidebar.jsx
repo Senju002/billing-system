@@ -70,15 +70,17 @@ export default function Sidebar({ user, classname }) {
                     </ListItem>
                     <AccordionBody className="py-1 ">
                         <List className="p-0 text-textColor ">
-                            <ListItem className="hover:text-primary ">
-                                <ListItemPrefix>
-                                    <ChevronRightIcon
-                                        strokeWidth={3}
-                                        className="h-3 w-5"
-                                    />
-                                </ListItemPrefix>
-                                Apartement
-                            </ListItem>
+                            <Link href={route("apartement.index")}>
+                                <ListItem className="hover:text-primary ">
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
+                                    </ListItemPrefix>
+                                    Apartement
+                                </ListItem>
+                            </Link>
                             <ListItem className="hover:text-primary ">
                                 <ListItemPrefix>
                                     <ChevronRightIcon

@@ -9,7 +9,7 @@ class Apartment extends Model
 {
     protected $fillable = ['name', 'address', 'created_by'];
 
-    public function createdBy()
+    public function user()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
