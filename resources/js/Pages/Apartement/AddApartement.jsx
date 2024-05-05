@@ -27,7 +27,7 @@ export default function AddApartement({ auth }) {
             errors={errors}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Add Apartement
+                    Add Apartment
                 </h2>
             }
         >
@@ -46,13 +46,13 @@ export default function AddApartement({ auth }) {
                             href={route("apartement.index")}
                             className="opacity-60 text-primaryHover "
                         >
-                            Apartement
+                            Apartment
                         </Link>
                         <Link
                             href={route("apartement.add")}
                             className="opacity-100 text-primary font-bold"
                         >
-                            Add Apartement
+                            Add Apartment
                         </Link>
                         <a href="#"></a>
                     </Breadcrumbs>

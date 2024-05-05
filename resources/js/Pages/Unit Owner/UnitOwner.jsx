@@ -18,14 +18,18 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const TABLE_HEAD = [
-    "Nama Apartemen",
-    "Alamat",
+    "No Identitas",
+    "Nama Owner",
+    "Nomor HP",
+    "Email",
+    "Apartemen",
+    "No Apartemen",
     "Dibuat Pada Tanggal",
     "Dibuat Oleh",
     "Edit",
 ];
 
-export default function Apartement({ auth, errors, data, filters }) {
+export default function UnitOwner({ auth, errors, data, filters }) {
     const { flash } = usePage().props;
 
     function handleSearch(event) {
@@ -58,17 +62,19 @@ export default function Apartement({ auth, errors, data, filters }) {
         }
     }, [flash.message]);
 
+    console.log(data.data);
+
     return (
         <AuthenticatedLayout
             auth={auth}
             errors={errors}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Apartment
+                    Unit Owner
                 </h2>
             }
         >
-            <Head title="Apartement" />
+            <Head title="Unit Owner" />
 
             <div className="py-12">
                 <div className="max-w-1xl mx-auto sm:px-6 lg:px-8 w-full">
@@ -80,10 +86,10 @@ export default function Apartement({ auth, errors, data, filters }) {
                             Dashboard
                         </Link>
                         <Link
-                            href={route("apartement.index")}
+                            href={route("unitowner.index")}
                             className="opacity-100 text-primary font-bold"
                         >
-                            Apartment
+                            Unit Owner
                         </Link>
                         <a href="#"></a>
                     </Breadcrumbs>
@@ -91,12 +97,14 @@ export default function Apartement({ auth, errors, data, filters }) {
                         <Card className=" p-12 h-full w-full">
                             <PageHeader
                                 handleSearch={handleSearch}
-                                title={"Apartment List"}
-                                description={"Informasi Data Apartememen"}
-                                buttonLabel={"Tambah Apartemen"}
+                                title={"Unit Owner List"}
+                                description={
+                                    "Informasi Data Unit Owner pada Apartemen"
+                                }
+                                buttonLabel={"Tambah Unit Owner"}
                                 icon={buttonIcon}
-                                addRoute={"apartement.add"}
-                                label="Cari Nama Apartemen"
+                                addRoute={"unitowner.add"}
+                                label="Cari Nama Unit Owner"
                             />
                             <CardBody className="overflow-scroll px-0">
                                 <table className="mt-4 mobile:mt-0 w-full min-w-max table-auto text-left border ">
@@ -121,11 +129,15 @@ export default function Apartement({ auth, errors, data, filters }) {
                                         {data.data.map(
                                             (
                                                 {
-                                                    name,
+                                                    identity_no,
+                                                    owner_name,
+                                                    phone,
+                                                    email,
+                                                    apartment,
+                                                    room_no,
                                                     created_at,
                                                     id,
-                                                    address,
-                                                    user,
+                                                    created_by,
                                                 },
                                                 index
                                             ) => {
@@ -138,7 +150,7 @@ export default function Apartement({ auth, errors, data, filters }) {
 
                                                 return (
                                                     <tr
-                                                        key={name}
+                                                        key={id}
                                                         className="hover:bg-primary/10"
                                                     >
                                                         <td className={classes}>
@@ -147,7 +159,9 @@ export default function Apartement({ auth, errors, data, filters }) {
                                                                     variant="small"
                                                                     className="font-normal capitalize"
                                                                 >
-                                                                    {name}
+                                                                    {
+                                                                        identity_no
+                                                                    }
                                                                 </Typography>
                                                             </div>
                                                         </td>
@@ -158,7 +172,52 @@ export default function Apartement({ auth, errors, data, filters }) {
                                                                     variant="small"
                                                                     className="font-normal capitalize"
                                                                 >
-                                                                    {address}
+                                                                    {owner_name}
+                                                                </Typography>
+                                                            </div>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <div className="flex flex-col">
+                                                                <Typography
+                                                                    variant="small"
+                                                                    className="font-normal capitalize"
+                                                                >
+                                                                    {phone}
+                                                                </Typography>
+                                                            </div>
+                                                        </td>
+
+                                                        <td className={classes}>
+                                                            <div className="flex flex-col">
+                                                                <Typography
+                                                                    variant="small"
+                                                                    className="font-normal capitalize"
+                                                                >
+                                                                    {email}
+                                                                </Typography>
+                                                            </div>
+                                                        </td>
+
+                                                        <td className={classes}>
+                                                            <div className="flex flex-col">
+                                                                <Typography
+                                                                    variant="small"
+                                                                    className="font-normal capitalize"
+                                                                >
+                                                                    {
+                                                                        apartment.name
+                                                                    }
+                                                                </Typography>
+                                                            </div>
+                                                        </td>
+
+                                                        <td className={classes}>
+                                                            <div className="flex flex-col">
+                                                                <Typography
+                                                                    variant="small"
+                                                                    className="font-normal capitalize"
+                                                                >
+                                                                    {room_no}
                                                                 </Typography>
                                                             </div>
                                                         </td>
@@ -179,14 +238,16 @@ export default function Apartement({ auth, errors, data, filters }) {
                                                                 variant="small"
                                                                 className="font-normal"
                                                             >
-                                                                {user.name}
+                                                                {
+                                                                    created_by.name
+                                                                }
                                                             </Typography>
                                                         </td>
 
                                                         <td className={classes}>
                                                             <Link
                                                                 href={route(
-                                                                    "apartement.edit",
+                                                                    "unitowner.edit",
                                                                     {
                                                                         id: id,
                                                                     }
@@ -198,7 +259,7 @@ export default function Apartement({ auth, errors, data, filters }) {
                                                                 as="button"
                                                             >
                                                                 <Tooltip
-                                                                    content="Edit Apartement"
+                                                                    content="Edit Unit Owner"
                                                                     animate={{
                                                                         mount: {
                                                                             scale: 1,

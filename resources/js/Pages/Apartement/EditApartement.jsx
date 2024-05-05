@@ -29,11 +29,11 @@ export default function EditApartement({ auth, apartementData }) {
             errors={errors}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Edit Apartement
+                    Edit Apartment
                 </h2>
             }
         >
-            <Head title="Edit Apartement" />
+            <Head title="Edit Apartment" />
 
             <div className="py-12">
                 <div className="max-w-1xl mx-auto sm:px-6 lg:px-8 w-full">
@@ -48,7 +48,7 @@ export default function EditApartement({ auth, apartementData }) {
                             href={route("apartement.index")}
                             className="opacity-60 text-primaryHover "
                         >
-                            Apartement
+                            Apartment
                         </Link>
                         <Link
                             href={route("apartement.edit", {
@@ -56,7 +56,7 @@ export default function EditApartement({ auth, apartementData }) {
                             })}
                             className="opacity-100 text-primary font-bold"
                         >
-                            Edit Apartement
+                            Edit Apartment
                         </Link>
                         <a href="#"></a>
                     </Breadcrumbs>

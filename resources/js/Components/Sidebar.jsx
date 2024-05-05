@@ -78,18 +78,20 @@ export default function Sidebar({ user, classname }) {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Apartement
+                                    Apartment
                                 </ListItem>
                             </Link>
-                            <ListItem className="hover:text-primary ">
-                                <ListItemPrefix>
-                                    <ChevronRightIcon
-                                        strokeWidth={3}
-                                        className="h-3 w-5"
-                                    />
-                                </ListItemPrefix>
-                                Unit Owner
-                            </ListItem>
+                            <Link href={route("unitowner.index")}>
+                                <ListItem className="hover:text-primary ">
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
+                                    </ListItemPrefix>
+                                    Unit Owner
+                                </ListItem>
+                            </Link>
                         </List>
                     </AccordionBody>
                     <Link href={route("profile.edit")}>
