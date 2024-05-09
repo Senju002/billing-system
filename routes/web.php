@@ -48,9 +48,7 @@ Route::middleware('auth')->group(function () {
 
 
     // !Unit Owner
-    Route::get('/unit-owner/add', function () {
-        return Inertia::render('Unit Owner/AddUnitOwner');
-    })->name('unitowner.add');
+    Route::get('/unit-owner/add', [UnitOwnerController::class, 'add'])->name('unitowner.add');
     Route::get('/unit-owner', [UnitOwnerController::class, 'index'])->name('unitowner.index');
     Route::post('/unit-owner/store', [UnitOwnerController::class, 'store'])->name('unitowner.store');
     Route::get('/unit-owner/{id}/edit', [UnitOwnerController::class, 'edit'])->name('unitowner.edit');

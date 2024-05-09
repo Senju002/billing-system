@@ -2,10 +2,9 @@ import Select from "react-tailwindcss-select";
 
 export default function InputSelect({ value, onChange, options }) {
     return (
-        <div className="flex flex-col w-full mr-4 mt-8 ">
+        <div className="flex flex-col w-full mr-4 over  ">
             <div className="lg:w-full ">
                 <Select
-                    // placeholder={food}
                     isSearchable
                     value={value}
                     onChange={onChange}

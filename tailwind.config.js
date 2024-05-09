@@ -8,6 +8,7 @@ module.exports = withMT({
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.jsx",
+        "./node_modules/react-tailwindcss-select/dist/index.esm.js",
     ],
 
     theme: {
