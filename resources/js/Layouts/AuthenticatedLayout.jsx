@@ -66,7 +66,7 @@ export default function Authenticated({ auth, header, children }) {
                 </Drawer>
             </>
 
-            <main className="w-full">{children}</main>
+            <main className="w-full overflow-auto">{children}</main>
         </div>
     );
 }

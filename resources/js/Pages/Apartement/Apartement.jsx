@@ -87,7 +87,7 @@ export default function Apartement({ auth, errors, data, filters }) {
                         </Link>
                         <a href="#"></a>
                     </Breadcrumbs>
-                    <div className="bg-white overflow-hidden sm:rounded-lg shadow-[0_1px_100px_#c3b0f7] h-screen">
+                    <div className="bg-white overflow-hidden sm:rounded-lg shadow-[0_1px_100px_#c3b0f7] h-full">
                         <Card className=" p-12 h-full w-full">
                             <PageHeader
                                 handleSearch={handleSearch}
