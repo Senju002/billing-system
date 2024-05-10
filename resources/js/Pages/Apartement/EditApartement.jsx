@@ -1,3 +1,4 @@
+import CustomInput from "@/Components/CustomInput";
 import PageHeader from "@/Components/PageHeader";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
@@ -71,49 +72,29 @@ export default function EditApartement({ auth, apartementData }) {
                             <CardBody className=" px-0 h-full  ">
                                 <form onSubmit={handleSubmit}>
                                     <div className="flex flex-row justify-start tablet:flex-col">
-                                        <div className="flex flex-col w-full mr-4">
-                                            <div className="lg:w-full ml-0 ">
-                                                <Input
-                                                    label="Nama Apartemen"
-                                                    id="name"
-                                                    value={data.name}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            "name",
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    color="blue"
-                                                />
-                                            </div>
-                                            {errors.name && (
-                                                <p className="text-red-500 text-sm ml-0 mt-3">
-                                                    {errors.name}
-                                                </p>
-                                            )}
-                                        </div>
+                                        <CustomInput
+                                            label="Nama Apartemen"
+                                            id="name"
+                                            value={data.name}
+                                            onChange={(e) =>
+                                                setData("name", e.target.value)
+                                            }
+                                            errors={errors.name}
+                                        />
 
-                                        <div className="flex flex-col w-full mr-4 tablet:mt-8">
-                                            <div className="lg:w-full ml-0 ">
-                                                <Input
-                                                    label="Alamat"
-                                                    id="address"
-                                                    value={data.address}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            "address",
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    color="blue"
-                                                />
-                                            </div>
-                                            {errors.address && (
-                                                <p className="text-red-500 text-sm ml-0 mt-3">
-                                                    {errors.address}
-                                                </p>
-                                            )}
-                                        </div>
+                                        <CustomInput
+                                            label="Alamat"
+                                            id="address"
+                                            value={data.address}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "address",
+                                                    e.target.value
+                                                )
+                                            }
+                                            errors={errors.address}
+                                            className="tablet:mt-8"
+                                        />
                                     </div>
 
                                     <div className="flex flex-row mt-8">

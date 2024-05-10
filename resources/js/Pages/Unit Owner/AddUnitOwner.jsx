@@ -1,3 +1,4 @@
+import CustomInput from "@/Components/CustomInput";
 import InputSelect from "@/Components/InputSelect";
 import PageHeader from "@/Components/PageHeader";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -83,71 +84,40 @@ export default function AddUnitOwner({ auth, apartmenetData }) {
                             <CardBody className=" px-0 h-full  ">
                                 <form onSubmit={handleSubmit}>
                                     <div className="flex flex-row justify-start tablet:flex-col">
-                                        <div className="flex flex-col w-full mr-4">
-                                            <div className="lg:w-full ml-0 ">
-                                                <Input
-                                                    label="Nama Owner"
-                                                    id="owner_name"
-                                                    value={data.owner_name}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            "owner_name",
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    color="blue"
-                                                />
-                                            </div>
-                                            {errors.owner_name && (
-                                                <p className="text-red-500 text-sm ml-0 mt-3">
-                                                    {errors.owner_name}
-                                                </p>
-                                            )}
-                                        </div>
+                                        <CustomInput
+                                            label="Nama Owner"
+                                            id="owner_name"
+                                            value={data.owner_name}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "owner_name",
+                                                    e.target.value
+                                                )
+                                            }
+                                            errors={errors.owner_name}
+                                        />
 
-                                        <div className="flex flex-col w-full mr-4 tablet:mt-8">
-                                            <div className="lg:w-full ml-0 ">
-                                                <Input
-                                                    label="Nomor HP"
-                                                    id="phone"
-                                                    value={data.phone}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            "phone",
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    color="blue"
-                                                />
-                                            </div>
-                                            {errors.phone && (
-                                                <p className="text-red-500 text-sm ml-0 mt-3">
-                                                    {errors.phone}
-                                                </p>
-                                            )}
-                                        </div>
+                                        <CustomInput
+                                            label="Nomor HP"
+                                            id="phone"
+                                            value={data.phone}
+                                            onChange={(e) =>
+                                                setData("phone", e.target.value)
+                                            }
+                                            errors={errors.phone}
+                                            className="tablet:mt-8"
+                                        />
 
-                                        <div className="flex flex-col w-full mr-4 tablet:mt-8">
-                                            <div className="lg:w-full ml-0 ">
-                                                <Input
-                                                    label="Email"
-                                                    id="email"
-                                                    value={data.email}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            "email",
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    color="blue"
-                                                />
-                                            </div>
-                                            {errors.email && (
-                                                <p className="text-red-500 text-sm ml-0 mt-3">
-                                                    {errors.email}
-                                                </p>
-                                            )}
-                                        </div>
+                                        <CustomInput
+                                            label="Email"
+                                            id="email"
+                                            value={data.email}
+                                            onChange={(e) =>
+                                                setData("email", e.target.value)
+                                            }
+                                            errors={errors.email}
+                                            className="tablet:mt-8"
+                                        />
                                     </div>
 
                                     <div className="flex flex-row justify-start tablet:flex-col mt-8">
@@ -164,49 +134,33 @@ export default function AddUnitOwner({ auth, apartmenetData }) {
                                             )}
                                         </div>
 
-                                        <div className="flex flex-col w-full mr-4 tablet:mt-8">
-                                            <div className="lg:w-full ml-0 ">
-                                                <Input
-                                                    label="Nomor Identitas"
-                                                    id="identity_no"
-                                                    value={data.identity_no}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            "identity_no",
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    color="blue"
-                                                />
-                                            </div>
-                                            {errors.identity_no && (
-                                                <p className="text-red-500 text-sm ml-0 mt-3">
-                                                    {errors.identity_no}
-                                                </p>
-                                            )}
-                                        </div>
+                                        <CustomInput
+                                            label="Nomor Identitas"
+                                            id="identity_no"
+                                            value={data.identity_no}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "identity_no",
+                                                    e.target.value
+                                                )
+                                            }
+                                            errors={errors.identity_no}
+                                            className="tablet:mt-8"
+                                        />
 
-                                        <div className="flex flex-col w-full mr-4 tablet:mt-8">
-                                            <div className="lg:w-full ml-0 ">
-                                                <Input
-                                                    label="Nomor Apartemen"
-                                                    id="room_no"
-                                                    value={data.room_no}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            "room_no",
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    color="blue"
-                                                />
-                                            </div>
-                                            {errors.room_no && (
-                                                <p className="text-red-500 text-sm ml-0 mt-3">
-                                                    {errors.room_no}
-                                                </p>
-                                            )}
-                                        </div>
+                                        <CustomInput
+                                            label="Nomor Apartemen"
+                                            id="room_no"
+                                            value={data.room_no}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "room_no",
+                                                    e.target.value
+                                                )
+                                            }
+                                            errors={errors.room_no}
+                                            className="tablet:mt-8"
+                                        />
                                     </div>
 
                                     <div className="flex flex-row mt-8">
