@@ -20,7 +20,7 @@ export default function InputSelect({ value, onChange, options }) {
                         listItem: ({ isSelected }) =>
                             `block transition capitalize duration-200 px-2 py-2 cursor-pointer select-none truncate rounded 	 ${
                                 isSelected
-                                    ? `text-black bg-primary `
+                                    ? `text-white bg-primary `
                                     : `text-black hover:bg-primary/50 hover:text-black `
                             }`,
                         searchBox: "text-gray-600 w-full",
