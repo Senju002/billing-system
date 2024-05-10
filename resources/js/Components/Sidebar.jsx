@@ -114,7 +114,7 @@ export default function Sidebar({ user, classname }) {
                         Profile
                     </ListItem>
                 </Link>
-                <Link href={route("logout")} method="post">
+                <Link href={route("logout")} method="post" as="button">
                     {" "}
                     <ListItem className="hover:text-primary text-textColor">
                         <ListItemPrefix>

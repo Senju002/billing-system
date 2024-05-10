@@ -58,4 +58,37 @@ class UnitOwnerController extends Controller
 
         return redirect('/unit-owner')->with('success', 'Unit Owner data has been created!');
     }
+
+    public function edit(ApartmentOwner $apartmentOwner, Request $request)
+    {
+        $apartment = Apartment::pluck('name', 'id')->map(function ($apartmentName, $apartementId) {
+            return ['label' => $apartmentName, 'value' => $apartementId];
+        })->prepend(['label' => 'Pilih Apartemen', 'value' => ''])->values()->toArray();
+
+        return Inertia::render('Unit Owner/EditUnitOwner', [
+            "unitOwnerData" => $apartmentOwner->find($request->id),
+            'apartmenetData' => $apartment,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Find the apartment by its ID
+        $apartmentOwner = ApartmentOwner::findOrFail($id);
+
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'owner_name' => 'required|string|max:100',
+            'phone' => 'required|string|regex:/^[0-9]{10,15}$/',
+            'email' => 'required|email|max:255',
+            'identity_no' => 'required|integer|min:1|max:999999999999999', // Adjust the max value as per your requirement
+            'room_no' => 'required|integer|min:1|max:999999999999999',
+            'apartment_id' => 'required|integer|exists:apartments,id',
+        ]);
+
+        // Update the apartment with the validated data
+        $apartmentOwner->update($validatedData);
+
+        return redirect('/unit-owner')->with('success', 'Unit owner data has been updated!');
+    }
 }

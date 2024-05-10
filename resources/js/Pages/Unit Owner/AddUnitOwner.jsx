@@ -2,7 +2,7 @@ import CustomInput from "@/Components/CustomInput";
 import InputSelect from "@/Components/InputSelect";
 import PageHeader from "@/Components/PageHeader";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import {
     Breadcrumbs,
     Button,
@@ -43,11 +43,11 @@ export default function AddUnitOwner({ auth, apartmenetData }) {
             errors={errors}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Add Apartment
+                    Add Unit Owner Data
                 </h2>
             }
         >
-            <Head title="Add Apartement" />
+            <Head title="Add Unit Owner Data" />
 
             <div className="py-12">
                 <div className="max-w-1xl mx-auto sm:px-6 lg:px-8 w-full h-[35rem] tablet:h-[55rem]">
