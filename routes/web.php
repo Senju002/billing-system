@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApartementController;
+use App\Http\Controllers\BillingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UnitOwnerController;
 use Illuminate\Foundation\Application;
@@ -60,9 +61,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/unit-owner/{id}/update', [UnitOwnerController::class, 'update'])->name('unitowner.update');
 
 
+    // !Billing
+    Route::get('/billing/add', [BillingController::class, 'add'])->name('billing.add');
+    Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
+    Route::post('/billing/store', [BillingController::class, 'store'])->name('billing.store');
+    Route::get('/billing/{id}/edit', [BillingController::class, 'edit'])->name('billing.edit');
+    Route::post('/billing/{id}/update', [BillingController::class, 'update'])->name('billing.update');
 
 
 
+    // !Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

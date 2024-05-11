@@ -107,7 +107,13 @@ export default function UnitOwner({ auth, errors, data, filters }) {
                                 label="Cari Nama Unit Owner"
                             />
                             <CardBody className="overflow-scroll px-0">
-                                <table className="mt-4 mobile:mt-0 w-full min-w-max table-auto text-left border ">
+                                <table
+                                    className="mt-4 mobile:mt-0 w-full min-w-max table-auto text-left border "
+                                    style={{
+                                        borderRadius: "10px",
+                                        overflow: "hidden",
+                                    }}
+                                >
                                     <thead>
                                         <tr>
                                             {TABLE_HEAD.map((head) => (
@@ -151,7 +157,7 @@ export default function UnitOwner({ auth, errors, data, filters }) {
                                                 return (
                                                     <tr
                                                         key={id}
-                                                        className="hover:bg-primary/10"
+                                                        className="bg-primary/15 hover:bg-primary/5 transition duration-300 text-black"
                                                     >
                                                         <td className={classes}>
                                                             <div className="flex flex-col">

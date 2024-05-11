@@ -18,7 +18,7 @@ class ApartementController extends Controller
                 ->when($request->has('search'), function ($query) use ($request) {
                     $query->where('name', 'like', "%" . $request->input('search') . "%");
                 })
-                ->orderByDesc('created_at')
+                ->orderByDesc('id')
                 ->paginate(5),
         ]);
     }

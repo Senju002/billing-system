@@ -94,7 +94,7 @@ export default function Sidebar({ user, classname }) {
                             </Link>
                         </List>
                     </AccordionBody>
-                    <Link href={route("profile.edit")}>
+                    <Link href={route("billing.index")}>
                         <ListItem className="hover:text-primary text-textColor ">
                             <ListItemPrefix>
                                 <CreditCardIcon className="h-5 w-5" />
