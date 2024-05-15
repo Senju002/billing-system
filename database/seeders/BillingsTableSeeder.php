@@ -30,6 +30,7 @@ class BillingsTableSeeder extends Seeder
             Billing::create([
                 'billing_type' => $billingType,
                 'billing_fee' => $faker->numberBetween(10000, 100000),
+                'billing_date' => $faker->dateTimeBetween('-2 months', 'now')->format('Y-m-d'), // Generate date within last 2 months
                 'owner_id' => $ownerId,
                 'meter_reading' => $meterReading,
                 'is_paid' => false,

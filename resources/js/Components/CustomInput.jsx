@@ -9,6 +9,7 @@ export default function CustomInput({
     color,
     errors,
     className,
+    type = "text",
 }) {
     return (
         <div className="flex flex-col w-full mr-4 ">
@@ -19,6 +20,7 @@ export default function CustomInput({
                     value={value}
                     onChange={onChange}
                     color={color}
+                    type={type}
                 />
             </div>
             {errors && (

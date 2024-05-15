@@ -157,10 +157,10 @@ export default function Billing({ auth, errors, data, filters }) {
                                                     owner,
                                                     billing_type,
                                                     billing_fee,
-                                                    created_at,
+                                                    created_by,
                                                     status,
                                                     paid_date,
-                                                    created_by,
+                                                    billing_date,
                                                 },
                                                 index
                                             ) => {
@@ -227,7 +227,7 @@ export default function Billing({ auth, errors, data, filters }) {
                                                                 className="font-normal"
                                                             >
                                                                 {moment(
-                                                                    created_at
+                                                                    billing_date
                                                                 ).format("LL")}
                                                             </Typography>
                                                         </td>

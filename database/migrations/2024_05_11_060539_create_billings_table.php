@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->enum('billing_type', ['Air', 'Listrik', 'Maintenance', 'Parkir']);
             $table->integer('billing_fee');
+            $table->date('billing_date')->nullable();
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('apartment_owners')->onDelete('cascade');
             $table->integer('meter_reading')->nullable();

@@ -9,7 +9,7 @@ class Billing extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'billing_type', 'billing_fee', 'owner_id', 'meter_reading', 'is_paid', 'paid_date', 'status', 'created_by'
+        'billing_type', 'billing_fee', 'billing_date', 'owner_id', 'meter_reading', 'is_paid', 'paid_date', 'status', 'created_by'
     ];
 
     public function createdBy()
