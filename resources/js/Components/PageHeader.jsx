@@ -41,7 +41,9 @@ export default function PageHeader({
                 <div className="flex flex-col items-center justify-between gap-4 md:flex-row tablet:items-start">
                     <div
                         className={
-                            hasFilter ? "w-[51.7rem]" : "w-full md:w-72 border"
+                            hasFilter
+                                ? "w-[21rem] tablet:w-full"
+                                : "w-full md:w-72 border"
                         }
                     >
                         <Input

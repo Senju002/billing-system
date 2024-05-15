@@ -7,6 +7,8 @@ import {
     IconButton,
     Tooltip,
     Breadcrumbs,
+    Select,
+    Option,
 } from "@material-tailwind/react";
 import {
     FolderPlusIcon,
@@ -14,12 +16,14 @@ import {
     TrashIcon,
 } from "@heroicons/react/24/solid";
 import { router, usePage } from "@inertiajs/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import Pagination from "@/Components/Pagination";
 import PageHeader from "@/Components/PageHeader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InputLabel from "@/Components/InputLabel";
+import CustomInput from "@/Components/CustomInput";
 
 const TABLE_HEAD = [
     "Nama Owner",
@@ -35,8 +39,13 @@ const TABLE_HEAD = [
 
 export default function Billing({ auth, errors, data, filters }) {
     const { flash } = usePage().props;
+    const [status, setStatus] = useState("");
+    const [search, setSearch] = useState("");
 
-    console.log(data);
+    const handleStatusChange = (value) => {
+        setStatus(value);
+    };
+
     function getStatusColor(status) {
         switch (status) {
             case "Pending":
@@ -49,6 +58,25 @@ export default function Billing({ auth, errors, data, filters }) {
                 return ""; // Default background color
         }
     }
+    const handleInputChange = (value, type) => {
+        if (type === "search") {
+            setSearch(value);
+        } else if (type === "status") {
+            setStatus(value);
+        }
+
+        router.get(
+            route(route().current()),
+            {
+                search: type === "search" ? value : search,
+                status: type === "status" ? value : status,
+            },
+            {
+                preserveState: true,
+                replace: true,
+            }
+        );
+    };
 
     function handleSearch(event) {
         console.log(event.target.value);
@@ -62,14 +90,25 @@ export default function Billing({ auth, errors, data, filters }) {
         );
     }
 
-    function getPaginationUrl(baseUrl, searchQuery) {
+    function getPaginationUrl(baseUrl, searchQuery, statusQuery) {
+        let url = baseUrl;
+        const params = [];
+
         if (searchQuery) {
-            // Include the search query in the URL
-            return `${baseUrl}&search=${searchQuery}`;
-        } else {
-            // Don't include the search query
-            return baseUrl;
+            params.push(`search=${encodeURIComponent(searchQuery)}`);
         }
+        if (statusQuery) {
+            params.push(`status=${encodeURIComponent(statusQuery)}`);
+        }
+
+        // Check if baseUrl already has a query parameter
+        if (baseUrl.includes("?")) {
+            url += "&" + params.join("&");
+        } else {
+            url += "?" + params.join("&");
+        }
+
+        return url;
     }
 
     const buttonIcon = <FolderPlusIcon strokeWidth={2} className="h-4 w-4" />;
@@ -114,7 +153,12 @@ export default function Billing({ auth, errors, data, filters }) {
                     <div className="bg-white overflow-hidden sm:rounded-lg shadow-[0_1px_100px_#c3b0f7] h-full">
                         <Card className=" p-12 h-full w-full">
                             <PageHeader
-                                handleSearch={handleSearch}
+                                handleSearch={(event) =>
+                                    handleInputChange(
+                                        event.target.value,
+                                        "search"
+                                    )
+                                }
                                 title={"Billing List"}
                                 description={
                                     "Informasi Data Billing pada Masing-masing Unit Owner"
@@ -123,7 +167,69 @@ export default function Billing({ auth, errors, data, filters }) {
                                 icon={buttonIcon}
                                 addRoute={"billing.add"}
                                 label="Cari Nama Unit Owner"
+                                hasFilter={true}
                             />
+                            <div className="mt-5">
+                                <div className=" flex flex-wrap">
+                                    <div className="w-[21rem] mr-4 tablet:w-full">
+                                        <InputLabel>
+                                            Status Pembyaran
+                                        </InputLabel>
+                                        <Select
+                                            id="status"
+                                            color="blue"
+                                            value={status}
+                                            onChange={(value) =>
+                                                handleInputChange(
+                                                    value,
+                                                    "status"
+                                                )
+                                            }
+                                        >
+                                            <Option value="">
+                                                Status Pembayaran
+                                            </Option>
+                                            <Option value="Pending">
+                                                Pending
+                                            </Option>
+                                            <Option value="Success">
+                                                Success
+                                            </Option>
+                                            <Option value="Cancel">
+                                                Cancel
+                                            </Option>
+                                        </Select>
+                                    </div>
+                                    {/* <div className="w-52 mr-4 tablet:w-full tablet:mt-5">
+                                        <InputLabel>Dari Tanggal</InputLabel>
+                                        <CustomInput
+                                            id="from_date"
+                                            onChange={(value) =>
+                                                handleInputChange(
+                                                    value,
+                                                    "from_date"
+                                                )
+                                            }
+                                            className=""
+                                            type="date"
+                                        />
+                                    </div>
+                                    <div className="w-52 mr-4 tablet:w-full tablet:mt-5">
+                                        <InputLabel>Sampai Tanggal</InputLabel>
+                                        <CustomInput
+                                            id="until_date"
+                                            onChange={(value) =>
+                                                handleInputChange(
+                                                    value,
+                                                    "status"
+                                                )
+                                            }
+                                            className=""
+                                            type="date"
+                                        />
+                                    </div> */}
+                                </div>
+                            </div>
                             <CardBody className="overflow-scroll px-0">
                                 <table
                                     className="mt-4 mobile:mt-0 w-full min-w-max table-auto text-left border "
@@ -362,7 +468,14 @@ export default function Billing({ auth, errors, data, filters }) {
                                 prev_page_url={data.prev_page_url}
                                 next_page_url={data.next_page_url}
                                 search={filters.search}
-                                getPaginationUrl={getPaginationUrl}
+                                status={filters.status} // Pass the status filter to the Pagination component
+                                getPaginationUrl={(baseUrl) =>
+                                    getPaginationUrl(
+                                        baseUrl,
+                                        filters.search,
+                                        filters.status
+                                    )
+                                }
                             />
                         </Card>
                     </div>

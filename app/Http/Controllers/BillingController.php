@@ -12,14 +12,19 @@ class BillingController extends Controller
 {
     public function index(Request $request)
     {
+        // dd($request);
         return Inertia::render('Billing/Billing', [
-            'filters' => $request->only('search'),
+            'filters' => $request->only('search', 'status'),  // Include 'status' in the filters
             'data' => Billing::with(['owner', 'createdBy'])
                 ->when($request->has('search'), function ($query) use ($request) {
                     $searchTerm = $request->input('search');
                     $query->whereHas('owner', function ($subQuery) use ($searchTerm) {
                         $subQuery->where('owner_name', 'like', "%$searchTerm%");
                     });
+                })
+                ->when($request->filled('status'), function ($query) use ($request) {  // Check if 'status' is not only present but also filled
+                    $status = $request->input('status');
+                    $query->where('status', $status);
                 })
                 ->orderByDesc('id')
                 ->paginate(10),
