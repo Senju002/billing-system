@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreign('owner_id')->references('id')->on('apartment_owners')->onDelete('cascade');
             $table->integer('meter_reading')->nullable();
             $table->boolean('is_paid')->default(false);
-            $table->dateTime('paid_date')->nullable();
+            $table->date('paid_date')->nullable();
             $table->enum('status', ['Pending', 'Success', 'Cancel'])->default('Pending');
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

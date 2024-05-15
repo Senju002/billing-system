@@ -86,7 +86,6 @@ class UnitOwnerController extends Controller
             'apartment_id' => 'required|integer|exists:apartments,id',
         ]);
 
-        // Update the apartment with the validated data
         $apartmentOwner->update($validatedData);
 
         return redirect('/unit-owner')->with('success', 'Unit owner data has been updated!');

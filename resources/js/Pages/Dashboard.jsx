@@ -1,9 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { Button } from "@material-tailwind/react";
 import { Breadcrumbs } from "@material-tailwind/react";
 
 export default function Dashboard({ auth, errors }) {
+    console.log(auth);
     return (
         <AuthenticatedLayout
             auth={auth}
@@ -22,16 +22,13 @@ export default function Dashboard({ auth, errors }) {
                         <a href="#" className="opacity-60">
                             Dashboard
                         </a>
-                        <a href="#" className="opacity-60">
-                            Apartement
-                        </a>
+
                         <a href="#"></a>
                     </Breadcrumbs>
                     <div className="bg-white overflow-hidden sm:rounded-lg shadow-[0_1px_100px_#c3b0f7] h-screen">
                         <div className="p-6 text-gray-900">
-                            You're logged in!
+                            Welcome to Dashboard {auth.user.name}
                         </div>
-                        <Button>Logout</Button>
                     </div>
                 </div>
             </div>
