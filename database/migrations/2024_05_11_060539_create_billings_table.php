@@ -23,6 +23,8 @@ return new class extends Migration
             $table->integer('meter_reading')->nullable();
             $table->boolean('is_paid')->default(false);
             $table->date('paid_date')->nullable();
+            $table->integer('fine')->nullable();
+            $table->date('due_date')->nullable();
             $table->enum('status', ['Pending', 'Success', 'Cancel'])->default('Pending');
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
