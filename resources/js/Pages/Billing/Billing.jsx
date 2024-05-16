@@ -24,12 +24,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InputLabel from "@/Components/InputLabel";
 import CustomInput from "@/Components/CustomInput";
+import BillingRow from "@/Components/BillingRow";
 
 const TABLE_HEAD = [
     "Nama Owner",
     "Jenis Tagihan",
     "Biaya Tagihan",
     "Tanggal Tagihan Dibuat",
+    "Tanggal Batas Pembayaran",
     "Status Pembayaran",
     "Tanggal Pembayaran",
     "Dibuat Oleh",
@@ -267,6 +269,8 @@ export default function Billing({ auth, errors, data, filters }) {
                                                     status,
                                                     paid_date,
                                                     billing_date,
+                                                    due_date,
+                                                    fine,
                                                 },
                                                 index
                                             ) => {
@@ -307,25 +311,14 @@ export default function Billing({ auth, errors, data, filters }) {
                                                                 </Typography>
                                                             </div>
                                                         </td>
-                                                        <td className={classes}>
-                                                            <div className="flex flex-col">
-                                                                <Typography
-                                                                    variant="small"
-                                                                    className="font-normal capitalize"
-                                                                >
-                                                                    {new Intl.NumberFormat(
-                                                                        "id-ID",
-                                                                        {
-                                                                            style: "currency",
-                                                                            currency:
-                                                                                "IDR",
-                                                                        }
-                                                                    ).format(
-                                                                        billing_fee
-                                                                    )}
-                                                                </Typography>
-                                                            </div>
-                                                        </td>
+                                                        <BillingRow
+                                                            billing_fee={
+                                                                billing_fee
+                                                            }
+                                                            fine={fine}
+                                                            due_date={due_date}
+                                                            classes={classes}
+                                                        />
 
                                                         <td className={classes}>
                                                             <Typography
@@ -334,6 +327,17 @@ export default function Billing({ auth, errors, data, filters }) {
                                                             >
                                                                 {moment(
                                                                     billing_date
+                                                                ).format("LL")}
+                                                            </Typography>
+                                                        </td>
+
+                                                        <td className={classes}>
+                                                            <Typography
+                                                                variant="small"
+                                                                className="font-normal"
+                                                            >
+                                                                {moment(
+                                                                    due_date
                                                                 ).format("LL")}
                                                             </Typography>
                                                         </td>

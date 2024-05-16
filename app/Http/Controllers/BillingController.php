@@ -49,6 +49,8 @@ class BillingController extends Controller
         // Define the base validation rules
         $rules = [
             'billing_date' => 'required|date',
+            'due_date' => 'required|date',
+            'fine' => 'required|integer|min:1|max:999999999999999',
             'billing_type' => 'required|string|in:Air,Listrik,Parkir,Maintenance',
             'billing_fee' => 'required|integer|min:1|max:999999999999999',
             'owner_id' => 'required|integer',
@@ -89,6 +91,8 @@ class BillingController extends Controller
         // Define the base validation rules
         $rules = [
             'billing_date' => 'required|date',
+            'due_date' => 'required|date',
+            'fine' => 'required|integer|min:1|max:999999999999999',
             'billing_type' => 'required|string|in:Air,Listrik,Parkir,Maintenance',
             'billing_fee' => 'required|integer|min:1|max:999999999999999',
             'owner_id' => 'required|integer',

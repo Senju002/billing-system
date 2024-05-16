@@ -30,6 +30,8 @@ export default function Edit({ auth, ownerData, billingData }) {
         status: billingData.status,
         paid_date: billingData.paid_date,
         owner_id: billingData.owner_id,
+        fine: billingData.fine,
+        due_date: billingData.due_date,
     });
 
     const handleStatusChange = (value) => {
@@ -204,7 +206,36 @@ export default function Edit({ auth, ownerData, billingData }) {
                                         />
                                     </div>
 
-                                    <div className="flex flex-row justify-start tablet:flex-col mt-8 ">
+                                    <div className="flex flex-row justify-start tablet:flex-col mt-8 tablet:mt-0">
+                                        <CustomInput
+                                            label="Tanggal Batas Pembayaran"
+                                            id="due_date"
+                                            value={data.due_date}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "due_date",
+                                                    e.target.value
+                                                )
+                                            }
+                                            errors={errors.due_date}
+                                            className="tablet:mt-8"
+                                            type="date"
+                                        />
+
+                                        <CustomInput
+                                            label="Biaya Denda Jika Lewat Batas Tagihan"
+                                            id="fine"
+                                            value={data.fine}
+                                            onChange={(e) =>
+                                                setData("fine", e.target.value)
+                                            }
+                                            type="number"
+                                            errors={errors.fine}
+                                            className="tablet:mt-8"
+                                        />
+                                    </div>
+
+                                    <div className="flex flex-row justify-start tablet:flex-col mt-8 tablet:mt-0">
                                         <div className="w-full mr-4 tablet:mt-8">
                                             <Select
                                                 label="Status Pembayaran"
