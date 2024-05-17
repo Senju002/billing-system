@@ -23,7 +23,6 @@ import PageHeader from "@/Components/PageHeader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InputLabel from "@/Components/InputLabel";
-import CustomInput from "@/Components/CustomInput";
 import BillingRow from "@/Components/BillingRow";
 
 const TABLE_HEAD = [
@@ -121,7 +120,44 @@ export default function Billing({ auth, errors, data, filters }) {
         }
     }, [flash.message]);
 
-    console.log(data.data);
+    const handleDelete = (id) => {
+        toast.info(
+            <div className="p-4">
+                <p>Are you sure you want to delete this data?</p>
+                <div className="mt-4 flex justify-end">
+                    <button
+                        className="px-4 py-2 mr-2 bg-red-500 text-white rounded hover:bg-red-700"
+                        onClick={() => deleteData(id)}
+                    >
+                        Yes
+                    </button>
+                    <button
+                        className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"
+                        onClick={() => toast.dismiss()}
+                    >
+                        No
+                    </button>
+                </div>
+            </div>,
+            {
+                icon: false,
+                closeOnClick: false,
+                draggable: false,
+                closeButton: false,
+                autoClose: false,
+                hideProgressBar: true,
+                position: "top-center",
+            }
+        );
+    };
+
+    const deleteData = (id) => {
+        // Send the delete request here
+        // ...
+
+        route("billing.delete"), { id };
+        toast.dismiss();
+    };
 
     return (
         <AuthenticatedLayout
@@ -424,12 +460,12 @@ export default function Billing({ auth, errors, data, filters }) {
                                                         <td className={classes}>
                                                             <Link
                                                                 href={route(
-                                                                    "billing.edit",
+                                                                    "billing.delete",
                                                                     {
                                                                         id: id,
                                                                     }
                                                                 )}
-                                                                method="get"
+                                                                method="post"
                                                                 data={{
                                                                     id: undefined,
                                                                 }}

@@ -131,4 +131,12 @@ class BillingController extends Controller
 
         return redirect('/billing')->with('success', 'Billing data has been updated!');
     }
+
+    public function destroy(Request $request)
+    {
+        $billing = Billing::find($request->id);
+        $billing->delete();
+        return redirect('/billing')->with('success', 'Billing data has been deleted!');
+
+    }
 }
