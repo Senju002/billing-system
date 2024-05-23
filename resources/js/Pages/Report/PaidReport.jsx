@@ -23,7 +23,7 @@ const TABLE_HEAD = [
     // "Dibuat Oleh",
 ];
 
-export default function Billing({ auth, errors, data, filters }) {
+export default function PaidReport({ auth, errors, data, filters }) {
     const [search, setSearch] = useState("");
 
     function getStatusColor(status) {
