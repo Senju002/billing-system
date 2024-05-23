@@ -17,6 +17,7 @@ import {
     ChevronRightIcon,
     ChevronDownIcon,
     CreditCardIcon,
+    DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 import ApplicationLogo from "./ApplicationLogo";
 
@@ -122,7 +123,7 @@ export default function Sidebar({ user, classname }) {
                             className="border-b-0 p-3 group text-textColor group-hover:text-primary"
                         >
                             <ListItemPrefix>
-                                <BuildingOffice2Icon className="h-5 w-5 group-hover:text-primary" />
+                                <DocumentTextIcon className="h-5 w-5 group-hover:text-primary" />
                             </ListItemPrefix>
                             <Typography className="mr-auto font-normal text-textColor group-hover:text-primary">
                                 Report
