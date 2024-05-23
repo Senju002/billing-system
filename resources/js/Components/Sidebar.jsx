@@ -162,7 +162,7 @@ export default function Sidebar({ user, classname }) {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Billings With Penalties
+                                    Billings With Penalty
                                 </ListItem>
                             </Link>
                         </List>

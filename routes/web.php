@@ -74,7 +74,7 @@ Route::middleware('auth')->group(function () {
     // !Report
     Route::get('/paid-billing-report', [ReportController::class, 'showPaid'])->name('billing.paid.index');
     Route::get('/unpaid-billing-report', [ReportController::class, 'showUnpaid'])->name('billing.unpaid.index');
-    Route::get('/billing-with-penalties-report', [ReportController::class, 'showPenalties'])->name('billing.penalties.index');
+    Route::get('/billing-with-penalty-report', [ReportController::class, 'showPenalties'])->name('billing.penalties.index');
 
 
 
