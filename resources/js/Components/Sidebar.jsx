@@ -131,7 +131,7 @@ export default function Sidebar({ user, classname }) {
                     </ListItem>
                     <AccordionBody className="py-1 ">
                         <List className="p-0 text-textColor ">
-                            <Link href={route("unitowner.index")}>
+                            <Link href={route("billing.paid.index")}>
                                 <ListItem className="hover:text-primary ">
                                     <ListItemPrefix>
                                         <ChevronRightIcon
@@ -142,7 +142,7 @@ export default function Sidebar({ user, classname }) {
                                     Paid Billings
                                 </ListItem>
                             </Link>
-                            <Link href={route("unitowner.index")}>
+                            <Link href={route("billing.unpaid.index")}>
                                 <ListItem className="hover:text-primary ">
                                     <ListItemPrefix>
                                         <ChevronRightIcon
@@ -153,7 +153,7 @@ export default function Sidebar({ user, classname }) {
                                     Unpaid Billings
                                 </ListItem>
                             </Link>
-                            <Link href={route("unitowner.index")}>
+                            <Link href={route("billing.penalties.index")}>
                                 <ListItem className="hover:text-primary ">
                                     <ListItemPrefix>
                                         <ChevronRightIcon

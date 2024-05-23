@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApartementController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UnitOwnerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/billing/{id}/edit', [BillingController::class, 'edit'])->name('billing.edit');
     Route::post('/billing/{id}/update', [BillingController::class, 'update'])->name('billing.update');
     Route::post('/billing/delete', [BillingController::class, 'destroy'])->name('billing.delete');
+
+
+    // !Report
+    Route::get('/paid-billing-report', [ReportController::class, 'showPaid'])->name('billing.paid.index');
+    Route::get('/unpaid-billing-report', [ReportController::class, 'showUnpaid'])->name('billing.unpaid.index');
+    Route::get('/billing-with-penalties-report', [ReportController::class, 'showPenalties'])->name('billing.penalties.index');
+
+
 
 
 

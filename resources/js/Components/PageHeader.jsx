@@ -17,6 +17,7 @@ export default function PageHeader({
     addRoute = "users",
     hasFilter = false,
     label = "Search",
+    showAddButton = true,
 }) {
     return (
         <CardHeader
@@ -52,15 +53,17 @@ export default function PageHeader({
                             onChange={handleSearch}
                         />
                     </div>
-                    <Link href={route(addRoute)} className=" mobile:w-full">
-                        <Button
-                            className="flex items-center gap-3 bg-green-500  mobile:justify-center mobile:mt-2 mobile:w-full"
-                            variant="fill"
-                            size="xl"
-                        >
-                            {icon} {buttonLabel}
-                        </Button>
-                    </Link>
+                    {showAddButton ? (
+                        <Link href={route(addRoute)} className=" mobile:w-full">
+                            <Button
+                                className="flex items-center gap-3 bg-green-500  mobile:justify-center mobile:mt-2 mobile:w-full"
+                                variant="fill"
+                                size="xl"
+                            >
+                                {icon} {buttonLabel}
+                            </Button>
+                        </Link>
+                    ) : null}
                 </div>
             ) : null}
         </CardHeader>
