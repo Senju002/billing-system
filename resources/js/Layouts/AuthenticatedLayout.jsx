@@ -66,10 +66,16 @@ export default function Authenticated({ auth, header, children }) {
                     <Typography className="text-textColor  font-extrabold">
                         BILLING SYSTEM
                     </Typography>
-                    <div className="text-primary">Billing Sistem</div>
+                    <div className="h-8 w-8 "></div>
                 </div>
             </div>
-            <main className={`pt-16 ${isDrawerOpen ? "filter blur-sm" : ""}`}>
+            <main
+                className={`pt-8 ${
+                    isDrawerOpen
+                        ? "filter transition blur-sm duration-100"
+                        : "transition duration-1000"
+                }`}
+            >
                 {children}
             </main>
         </div>

@@ -30,9 +30,8 @@ const TABLE_HEAD = [
     "Jenis Tagihan",
     "Biaya Tagihan",
     "Tanggal Tagihan Dibuat",
-    "Tanggal Batas Pembayaran",
+    "Tanggal Jatuh Tempo",
     "Status Pembayaran",
-    "Tanggal Pembayaran",
     "Dibuat Oleh",
     "Edit",
     "Delete",
@@ -303,7 +302,6 @@ export default function Billing({ auth, errors, data, filters }) {
                                                     billing_fee,
                                                     created_by,
                                                     status,
-                                                    paid_date,
                                                     billing_date,
                                                     due_date,
                                                     fine,
@@ -347,14 +345,34 @@ export default function Billing({ auth, errors, data, filters }) {
                                                                 </Typography>
                                                             </div>
                                                         </td>
-                                                        <BillingRow
+                                                        {/* <BillingRow
                                                             billing_fee={
                                                                 billing_fee
                                                             }
                                                             fine={fine}
                                                             due_date={due_date}
                                                             classes={classes}
-                                                        />
+                                                        /> */}
+
+                                                        <td className={classes}>
+                                                            <div className="flex flex-col">
+                                                                <Typography
+                                                                    variant="small"
+                                                                    className="font-normal capitalize"
+                                                                >
+                                                                    {new Intl.NumberFormat(
+                                                                        "id-ID",
+                                                                        {
+                                                                            style: "currency",
+                                                                            currency:
+                                                                                "IDR",
+                                                                        }
+                                                                    ).format(
+                                                                        billing_fee
+                                                                    )}
+                                                                </Typography>
+                                                            </div>
+                                                        </td>
 
                                                         <td className={classes}>
                                                             <Typography
@@ -387,23 +405,6 @@ export default function Billing({ auth, errors, data, filters }) {
                                                                     )} text-white rounded-2xl w-20 flex justify-center`}
                                                                 >
                                                                     {status}
-                                                                </Typography>
-                                                            </div>
-                                                        </td>
-
-                                                        <td className={classes}>
-                                                            <div className="flex flex-col">
-                                                                <Typography
-                                                                    variant="small"
-                                                                    className="font-normal capitalize"
-                                                                >
-                                                                    {paid_date
-                                                                        ? moment(
-                                                                              paid_date
-                                                                          ).format(
-                                                                              "LL"
-                                                                          )
-                                                                        : "Belum ada Pembayaran"}
                                                                 </Typography>
                                                             </div>
                                                         </td>

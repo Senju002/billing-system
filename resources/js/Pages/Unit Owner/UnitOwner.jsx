@@ -21,7 +21,6 @@ const TABLE_HEAD = [
     "No Identitas",
     "Nama Owner",
     "Nomor HP",
-    "Email",
     "Apartemen",
     "No Apartemen",
     "Dibuat Pada Tanggal",
@@ -138,7 +137,6 @@ export default function UnitOwner({ auth, errors, data, filters }) {
                                                     identity_no,
                                                     owner_name,
                                                     phone,
-                                                    email,
                                                     apartment,
                                                     room_no,
                                                     created_at,
@@ -189,17 +187,6 @@ export default function UnitOwner({ auth, errors, data, filters }) {
                                                                     className="font-normal capitalize"
                                                                 >
                                                                     {phone}
-                                                                </Typography>
-                                                            </div>
-                                                        </td>
-
-                                                        <td className={classes}>
-                                                            <div className="flex flex-col">
-                                                                <Typography
-                                                                    variant="small"
-                                                                    className="font-normal capitalize"
-                                                                >
-                                                                    {email}
                                                                 </Typography>
                                                             </div>
                                                         </td>
