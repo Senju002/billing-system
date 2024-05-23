@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { Link } from "@inertiajs/react";
 import {
     Card,
@@ -15,8 +14,6 @@ import {
     UserCircleIcon,
     PowerIcon,
     BuildingOffice2Icon,
-} from "@heroicons/react/24/solid";
-import {
     ChevronRightIcon,
     ChevronDownIcon,
     CreditCardIcon,
@@ -24,7 +21,7 @@ import {
 import ApplicationLogo from "./ApplicationLogo";
 
 export default function Sidebar({ user, classname }) {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(0);
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
@@ -94,14 +91,81 @@ export default function Sidebar({ user, classname }) {
                             </Link>
                         </List>
                     </AccordionBody>
-                    <Link href={route("billing.index")}>
-                        <ListItem className="hover:text-primary text-textColor ">
+                </Accordion>
+
+                <Link href={route("billing.index")}>
+                    <ListItem className="hover:text-primary text-textColor ">
+                        <ListItemPrefix>
+                            <CreditCardIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Billing
+                    </ListItem>
+                </Link>
+
+                <Accordion
+                    open={open === 2}
+                    icon={
+                        <ChevronDownIcon
+                            strokeWidth={2.5}
+                            className={`mx-auto h-4 w-4 transition-transform ${
+                                open === 2 ? "rotate-180" : ""
+                            }`}
+                        />
+                    }
+                >
+                    <ListItem
+                        className="p-0 hover:text-primary "
+                        selected={open === 2}
+                    >
+                        <AccordionHeader
+                            onClick={() => handleOpen(2)}
+                            className="border-b-0 p-3 group text-textColor group-hover:text-primary"
+                        >
                             <ListItemPrefix>
-                                <CreditCardIcon className="h-5 w-5" />
+                                <BuildingOffice2Icon className="h-5 w-5 group-hover:text-primary" />
                             </ListItemPrefix>
-                            Billing
-                        </ListItem>
-                    </Link>
+                            <Typography className="mr-auto font-normal text-textColor group-hover:text-primary">
+                                Report
+                            </Typography>
+                        </AccordionHeader>
+                    </ListItem>
+                    <AccordionBody className="py-1 ">
+                        <List className="p-0 text-textColor ">
+                            <Link href={route("unitowner.index")}>
+                                <ListItem className="hover:text-primary ">
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
+                                    </ListItemPrefix>
+                                    Paid Billings
+                                </ListItem>
+                            </Link>
+                            <Link href={route("unitowner.index")}>
+                                <ListItem className="hover:text-primary ">
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
+                                    </ListItemPrefix>
+                                    Unpaid Billings
+                                </ListItem>
+                            </Link>
+                            <Link href={route("unitowner.index")}>
+                                <ListItem className="hover:text-primary ">
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
+                                    </ListItemPrefix>
+                                    Billings With Penalties
+                                </ListItem>
+                            </Link>
+                        </List>
+                    </AccordionBody>
                 </Accordion>
 
                 <hr className="my-2 border-blue-gray-50" />
@@ -115,7 +179,6 @@ export default function Sidebar({ user, classname }) {
                     </ListItem>
                 </Link>
                 <Link href={route("logout")} method="post" as="button">
-                    {" "}
                     <ListItem className="hover:text-primary text-textColor">
                         <ListItemPrefix>
                             <PowerIcon className="h-5 w-5" />

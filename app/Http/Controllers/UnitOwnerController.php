@@ -19,7 +19,7 @@ class UnitOwnerController extends Controller
                     $query->where('owner_name', 'like', "%" . $request->input('search') . "%");
                 })
                 ->orderByDesc('id')
-                ->paginate(5),
+                ->paginate(10),
         ]);
     }
 

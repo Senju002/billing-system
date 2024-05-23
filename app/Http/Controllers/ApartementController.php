@@ -19,7 +19,7 @@ class ApartementController extends Controller
                     $query->where('name', 'like', "%" . $request->input('search') . "%");
                 })
                 ->orderByDesc('id')
-                ->paginate(5),
+                ->paginate(10),
         ]);
     }
 

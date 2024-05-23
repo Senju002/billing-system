@@ -111,7 +111,7 @@ export default function Apartement({ auth, errors, data, filters }) {
                                             {TABLE_HEAD.map((head) => (
                                                 <th
                                                     key={head}
-                                                    className="border-y  bg-primary p-4 "
+                                                    className="border-y  bg-primary pl-4 py-4 "
                                                 >
                                                     <Typography
                                                         variant="small"
@@ -139,8 +139,8 @@ export default function Apartement({ auth, errors, data, filters }) {
                                                     index ===
                                                     data.data.length - 1;
                                                 const classes = isLast
-                                                    ? "p-4"
-                                                    : "p-4 border-b border-blue-gray-150";
+                                                    ? "pl-4"
+                                                    : "pl-4 border-b border-blue-gray-150";
 
                                                 return (
                                                     <tr
