@@ -13,6 +13,7 @@ import Pagination from "@/Components/Pagination";
 import PageHeader from "@/Components/PageHeader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CustomModal } from "@/Components/CustomModal";
 
 const TABLE_HEAD = [
     "Nama Owner",
@@ -76,6 +77,49 @@ export default function PenaltiesReport({ auth, errors, data, filters }) {
 
         return url;
     }
+    // const socket = new WebSocket("ws://localhost:6001");
+
+    // socket.onopen = function () {
+    //     console.log("WebSocket connection successfully opened");
+    // };
+
+    // socket.onerror = function (event) {
+    //     console.error("WebSocket error observed:", event);
+    // };
+
+    // socket.onmessage = function (event) {
+    //     console.log("Received data:", event.data);
+    //     const data = JSON.parse(event.data);
+    //     if (data.event === "OwnerChecked") {
+    //         alert(
+    //             `Owner Name: ${data.owner_name}, Identity No: ${data.identity_no}`
+    //         );
+    //     }
+    // };
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalValue, setModalValue] = useState(null);
+
+    const handleOpenModal = (value) => {
+        setModalValue(value);
+        setModalOpen(true);
+    };
+
+    useEffect(() => {
+        const channel = Echo.channel("owners");
+        channel.listen("OwnerChecked", (e) => {
+            console.log(e.data);
+            handleOpenModal(e.data);
+        });
+
+        return () => {
+            channel.stopListening("OwnerChecked");
+        };
+    }, []);
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
 
     return (
         <AuthenticatedLayout
@@ -126,6 +170,12 @@ export default function PenaltiesReport({ auth, errors, data, filters }) {
                                 hasFilter={true}
                                 showAddButton={false}
                             />
+                            <CustomModal
+                                open={modalOpen}
+                                value={modalValue}
+                                handleClose={handleCloseModal}
+                            />
+
                             <div className="mt-5">
                                 <div className=" flex flex-wrap">
                                     {/* <div className="w-52 mr-4 tablet:w-full tablet:mt-5">
