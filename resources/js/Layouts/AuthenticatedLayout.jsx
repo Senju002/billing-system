@@ -1,41 +1,37 @@
-import { useState } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import { Link } from "@inertiajs/react";
-import {
-    Card,
-    Typography,
-    List,
-    ListItem,
-    ListItemPrefix,
-    Accordion,
-    AccordionHeader,
-    AccordionBody,
-    Drawer,
-    IconButton,
-} from "@material-tailwind/react";
-import {
-    UserCircleIcon,
-    PowerIcon,
-    BuildingOffice2Icon,
-} from "@heroicons/react/24/solid";
-import {
-    ChevronRightIcon,
-    ChevronDownIcon,
-    CreditCardIcon,
-    Bars3Icon,
-    XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import { Typography, Drawer, IconButton } from "@material-tailwind/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Sidebar from "@/Components/Sidebar";
+import { CustomModal } from "@/Components/CustomModal";
 
 export default function Authenticated({ auth, header, children }) {
-    const [open, setOpen] = useState(false);
-
-    const handleOpen = (value) => {
-        setOpen(open === value ? 0 : value);
-    };
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const openDrawer = () => setIsDrawerOpen(true);
     const closeDrawer = () => setIsDrawerOpen(false);
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalValue, setModalValue] = useState(null);
+
+    const handleOpenModal = (value) => {
+        setModalValue(value);
+        setModalOpen(true);
+    };
+
+    useEffect(() => {
+        const channel = Echo.channel("owners");
+        channel.listen("OwnerChecked", (e) => {
+            console.log(e.data);
+            handleOpenModal(e.data);
+        });
+
+        return () => {
+            channel.stopListening("OwnerChecked");
+        };
+    }, []);
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col tablet:flex-col">
@@ -69,6 +65,11 @@ export default function Authenticated({ auth, header, children }) {
                     <div className="h-8 w-8 "></div>
                 </div>
             </div>
+            <CustomModal
+                open={modalOpen}
+                value={modalValue}
+                handleClose={handleCloseModal}
+            />
             <main
                 className={`pt-8 ${
                     isDrawerOpen

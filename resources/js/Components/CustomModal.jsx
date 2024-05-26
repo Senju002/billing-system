@@ -17,30 +17,30 @@ export function CustomModal({ open, value, handleClose }) {
                 unmount: { scale: 0.9, y: -100 },
             }}
         >
-            <DialogHeader>Emergency Request.</DialogHeader>
+            <DialogHeader className="mobile:text-lg font-bold text-primary flex justify-center border-b-2 border-primaryHover mx-4">
+                Emergency Request !!!
+            </DialogHeader>
             <DialogBody>
                 {value ? (
-                    <div>
-                        <p>
-                            <strong>Identity No:</strong> {value.identity_no}
-                        </p>
-                        <p>
-                            <strong>Owner Name:</strong> {value.owner_name}
-                        </p>
+                    <div className="text-black grid grid-cols-2 gap-x-4 gap-y-2 mobile:text-xs">
+                        <div className="font-bold">Identity No</div>
+                        <div>: {value.identity_no}</div>
+                        <div className="font-bold">Owner Name</div>
+                        <div>: {value.owner_name}</div>
+                        <div className="font-bold">Email</div>
+                        <div> : {value.email}</div>
+                        <div className="font-bold">Phone</div>
+                        <div> : {value.phone}</div>
+                        <div className="font-bold">Apartment</div>
+                        <div>: {value.apartment}</div>
+                        <div className="font-bold">No Apartment</div>
+                        <div>: {value.room_no}</div>
                     </div>
                 ) : (
                     <p>Loading...</p>
                 )}
             </DialogBody>
             <DialogFooter>
-                <Button
-                    variant="text"
-                    color="red"
-                    onClick={handleClose}
-                    className="mr-1"
-                >
-                    <span>Cancel</span>
-                </Button>
                 <Button
                     // variant="gradient"
                     className="bg-primary"
