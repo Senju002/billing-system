@@ -75,4 +75,28 @@ class ReportController extends Controller
                 ->paginate(10),
         ]);
     }
+
+    public function show(Request $request)
+    {
+        // Retrieve the user_id from the request
+        $userId = $request->id;
+
+        // Fetch the owner name based on the user_id
+        $ownerName = ApartmentOwner::where('id', $userId)->value('owner_name');
+
+        // Fetch all billing records where user_id equals owner_id and order by billing_date in descending order, with pagination
+        $data = Billing::where('owner_id', $userId)
+            ->orderBy('billing_date', 'desc')
+            ->with('owner') // Eager load the owner relationship
+            ->paginate(10);
+
+
+        // Pass the fetched data to the Inertia component
+        return Inertia::render('Report/OwnerBillingHistory', [
+            "data" => $data,
+            'filters' => $request->only('search', 'status'),  // Include 'status' in the filters
+            'ownerId' => $userId,
+            'ownerName' => $ownerName,
+        ]);
+    }
 }

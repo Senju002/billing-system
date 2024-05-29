@@ -8,14 +8,13 @@ import {
     Tooltip,
     Breadcrumbs,
 } from "@material-tailwind/react";
-import { FolderPlusIcon, PencilIcon } from "@heroicons/react/24/solid";
 import { router, usePage } from "@inertiajs/react";
 import { useEffect } from "react";
-import moment from "moment";
 import Pagination from "@/Components/Pagination";
 import PageHeader from "@/Components/PageHeader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { EyeIcon } from "@heroicons/react/24/outline";
 
 const TABLE_HEAD = [
     "No Identitas",
@@ -23,6 +22,7 @@ const TABLE_HEAD = [
     "Nomor HP",
     "Apartemen",
     "No Apartemen",
+    "View",
 ];
 
 export default function OwnerReport({ auth, errors, data, filters }) {
@@ -142,8 +142,8 @@ export default function OwnerReport({ auth, errors, data, filters }) {
                                                     index ===
                                                     data.data.length - 1;
                                                 const classes = isLast
-                                                    ? "pl-4 py-2"
-                                                    : "pl-4  py-2 border-b border-blue-gray-150";
+                                                    ? "pl-4 "
+                                                    : "pl-4   border-b border-blue-gray-150";
 
                                                 return (
                                                     <tr
@@ -206,6 +206,45 @@ export default function OwnerReport({ auth, errors, data, filters }) {
                                                                     {room_no}
                                                                 </Typography>
                                                             </div>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <Link
+                                                                href={route(
+                                                                    "owner.report.show",
+                                                                    {
+                                                                        id: id,
+                                                                    }
+                                                                )}
+                                                                method="get"
+                                                                data={{
+                                                                    id: undefined,
+                                                                }}
+                                                                as="button"
+                                                            >
+                                                                <Tooltip
+                                                                    content={`View ${owner_name}'s Billing History`}
+                                                                    animate={{
+                                                                        mount: {
+                                                                            scale: 1,
+                                                                            y: 0,
+                                                                        },
+                                                                        unmount:
+                                                                            {
+                                                                                scale: 0,
+                                                                                y: 25,
+                                                                            },
+                                                                    }}
+                                                                    className="bg-primary/80"
+                                                                >
+                                                                    <IconButton
+                                                                        variant="fill"
+                                                                        // color="blue"
+                                                                        className="bg-primary hover:bg-primaryHover"
+                                                                    >
+                                                                        <EyeIcon className="h-4 w-4" />
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                            </Link>
                                                         </td>
                                                     </tr>
                                                 );

@@ -77,9 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/unpaid-billing-report', [ReportController::class, 'showUnpaid'])->name('billing.unpaid.index');
     Route::get('/billing-with-penalty-report', [ReportController::class, 'showPenalties'])->name('billing.penalties.index');
     Route::get('/owner-report', [ReportController::class, 'ownerReport'])->name('owner.report.index');
-
-
-
+    Route::get('/owner-report/{id}/show', [ReportController::class, 'show'])->name('owner.report.show');
 
 
     // !Profile
