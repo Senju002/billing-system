@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApartementController;
 use App\Http\Controllers\BillingController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UnitOwnerController;
@@ -38,11 +39,12 @@ Route::fallback(function () {
 });
 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
+
+    // !Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
     // !Apartement
     Route::get('/apartement/add', function () {
         return Inertia::render('Apartement/AddApartement');
@@ -51,7 +53,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/apartement/store', [ApartementController::class, 'store'])->name('apartement.store');
     Route::get('/apartement/{id}/edit', [ApartementController::class, 'edit'])->name('apartement.edit');
     Route::post('/apartement/{id}/update', [ApartementController::class, 'update'])->name('apartement.update');
-
 
 
     // !Unit Owner

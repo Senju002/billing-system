@@ -18,6 +18,7 @@ import {
     ChevronDownIcon,
     CreditCardIcon,
     DocumentTextIcon,
+    HomeIcon,
 } from "@heroicons/react/24/outline";
 import ApplicationLogo from "./ApplicationLogo";
 
@@ -39,6 +40,14 @@ export default function Sidebar({ user, classname }) {
                 <Typography>Good Evening, {user}</Typography>
             </div>
             <List>
+                <Link href={route("dashboard")}>
+                    <ListItem className="hover:text-primary text-textColor ">
+                        <ListItemPrefix>
+                            <HomeIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Dashboard
+                    </ListItem>
+                </Link>
                 <Accordion
                     open={open === 1}
                     icon={
