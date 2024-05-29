@@ -174,6 +174,17 @@ export default function Sidebar({ user, classname }) {
                                     Billings With Penalty
                                 </ListItem>
                             </Link>
+                            <Link href={route("owner.report.index")}>
+                                <ListItem className="hover:text-primary ">
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
+                                    </ListItemPrefix>
+                                    Unit Owner Report
+                                </ListItem>
+                            </Link>
                         </List>
                     </AccordionBody>
                 </Accordion>

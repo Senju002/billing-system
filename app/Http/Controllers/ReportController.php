@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApartmentOwner;
 use Illuminate\Http\Request;
 use App\Models\Billing;
 use Inertia\Inertia;
@@ -55,6 +56,20 @@ class ReportController extends Controller
                     $query->whereHas('owner', function ($subQuery) use ($searchTerm) {
                         $subQuery->where('owner_name', 'like', "%$searchTerm%");
                     });
+                })
+                ->orderByDesc('id')
+                ->paginate(10),
+        ]);
+    }
+
+    public function ownerReport(Request $request)
+    {
+
+        return Inertia::render('Report/OwnerReport', [
+            'filters' => $request->only('search'),
+            'data' => ApartmentOwner::with(['apartment', 'createdBy']) // Eager load the apartment and createdBy relationships
+                ->when($request->has('search'), function ($query) use ($request) {
+                    $query->where('owner_name', 'like', "%" . $request->input('search') . "%");
                 })
                 ->orderByDesc('id')
                 ->paginate(10),
