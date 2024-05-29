@@ -45,7 +45,7 @@ class UnitOwnerController extends Controller
             'owner_name' => 'required|string|max:100',
             'phone' => 'required|string|regex:/^[0-9]{10,15}$/',
             'email' => 'required|email|max:255',
-            'identity_no' => 'required|integer|min:1|max:999999999999999', // Adjust the max value as per your requirement
+            'identity_no' => 'required|integer|min:1', // Adjust the max value as per your requirement
             'room_no' => 'required|integer|min:1|max:999999999999999',
             'apartment_id' => 'required|integer|exists:apartments,id',
         ]);
@@ -81,7 +81,7 @@ class UnitOwnerController extends Controller
             'owner_name' => 'required|string|max:100',
             'phone' => 'required|string|regex:/^[0-9]{10,15}$/',
             'email' => 'required|email|max:255',
-            'identity_no' => 'required|integer|min:1|max:999999999999999', // Adjust the max value as per your requirement
+            'identity_no' => 'required|integer|min:1', // Adjust the max value as per your requirement
             'room_no' => 'required|integer|min:1|max:999999999999999',
             'apartment_id' => 'required|integer|exists:apartments,id',
         ]);
