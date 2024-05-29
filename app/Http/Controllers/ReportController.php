@@ -84,17 +84,25 @@ class ReportController extends Controller
         // Fetch the owner name based on the user_id
         $ownerName = ApartmentOwner::where('id', $userId)->value('owner_name');
 
-        // Fetch all billing records where user_id equals owner_id and order by billing_date in descending order, with pagination
-        $data = Billing::where('owner_id', $userId)
+        // Initialize the query builder with basic conditions
+        $query = Billing::where('owner_id', $userId)
             ->orderBy('billing_date', 'desc')
-            ->with('owner') // Eager load the owner relationship
-            ->paginate(10);
+            ->with('owner'); // Eager load the owner relationship
+
+        // Check if 'status' is present in the request
+        if ($request->has('status')) {
+            // Filter the query based on the 'status' from the request
+            $query->where('status', $request->status);
+        }
+
+        // Fetch data with pagination
+        $data = $query->paginate(20);
 
 
         // Pass the fetched data to the Inertia component
         return Inertia::render('Report/OwnerBillingHistory', [
             "data" => $data,
-            'filters' => $request->only('search', 'status'),  // Include 'status' in the filters
+            'filters' => $request->only('status'),  // Include 'status' in the filters
             'ownerId' => $userId,
             'ownerName' => $ownerName,
         ]);

@@ -39,7 +39,6 @@ export default function Billing({
     ownerName,
 }) {
     const [status, setStatus] = useState("");
-    const [search, setSearch] = useState("");
 
     const handleStatusChange = (value) => {
         setStatus(value);
@@ -58,16 +57,13 @@ export default function Billing({
         }
     }
     const handleInputChange = (value, type) => {
-        if (type === "search") {
-            setSearch(value);
-        } else if (type === "status") {
+        if (type === "status") {
             setStatus(value);
         }
 
         router.get(
-            route(route().current()),
+            route(route().current(), { id: ownerId }),
             {
-                search: type === "search" ? value : search,
                 status: type === "status" ? value : status,
             },
             {
@@ -77,13 +73,10 @@ export default function Billing({
         );
     };
 
-    function getPaginationUrl(baseUrl, searchQuery, statusQuery) {
+    function getPaginationUrl(baseUrl, statusQuery) {
         let url = baseUrl;
         const params = [];
 
-        if (searchQuery) {
-            params.push(`search=${encodeURIComponent(searchQuery)}`);
-        }
         if (statusQuery) {
             params.push(`status=${encodeURIComponent(statusQuery)}`);
         }
