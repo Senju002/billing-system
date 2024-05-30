@@ -6,6 +6,8 @@ use App\Models\ApartmentOwner;
 use Illuminate\Http\Request;
 use App\Models\Billing;
 use Inertia\Inertia;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -85,24 +87,40 @@ class ReportController extends Controller
         $ownerName = ApartmentOwner::where('id', $userId)->value('owner_name');
 
         // Initialize the query builder with basic conditions
-        $query = Billing::where('owner_id', $userId)
-            ->orderBy('billing_date', 'desc')
-            ->with('owner'); // Eager load the owner relationship
+        $query = DB::table('billings')
+            ->where('owner_id', $userId)
+            ->orderBy('billing_date', 'desc');
 
-        // Check if 'status' is present in the request
+        // Parse from_date and until_date from request
+        $fromDate = $request->from_date ? date('Y-m-d', strtotime($request->from_date)) : null;
+        $untilDate = $request->until_date ? date('Y-m-d', strtotime($request->until_date)) : null;
+
+        // Apply date range filter if provided
+        if ($fromDate && $untilDate) {
+            $query->whereBetween('billing_date', [$fromDate, $untilDate]);
+        } elseif ($fromDate) {
+            $query->whereDate('billing_date', '>=', $fromDate);
+        } elseif ($untilDate) {
+            $query->whereDate('billing_date', '<=', $untilDate);
+        } else {
+            // If neither from_date nor until_date provided, use default range
+            $defaultFromDate = now()->subMonths(12)->toDateString();
+            $query->whereDate('billing_date', '>=', $defaultFromDate)
+                ->whereDate('billing_date', '<=', now()->endOfDay());
+        }
+
+        // Apply status filter if provided
         if ($request->has('status')) {
-            // Filter the query based on the 'status' from the request
             $query->where('status', $request->status);
         }
 
         // Fetch data with pagination
         $data = $query->paginate(20);
 
-
         // Pass the fetched data to the Inertia component
         return Inertia::render('Report/OwnerBillingHistory', [
             "data" => $data,
-            'filters' => $request->only('status'),  // Include 'status' in the filters
+            'filters' => $request->only('status', 'from_date', 'until_date'),
             'ownerId' => $userId,
             'ownerName' => $ownerName,
         ]);

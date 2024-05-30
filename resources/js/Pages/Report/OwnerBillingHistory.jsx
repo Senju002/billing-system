@@ -7,6 +7,7 @@ import {
     Breadcrumbs,
     Select,
     Option,
+    Button,
 } from "@material-tailwind/react";
 
 import { router } from "@inertiajs/react";
@@ -18,9 +19,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InputLabel from "@/Components/InputLabel";
 import BillingRow from "@/Components/BillingRow";
+import CustomInput from "@/Components/CustomInput";
 
 const TABLE_HEAD = [
-    "Nama Owner",
     "Jenis Tagihan",
     "Biaya Tagihan",
     "Denda",
@@ -39,6 +40,8 @@ export default function Billing({
     ownerName,
 }) {
     const [status, setStatus] = useState("");
+    const [fromDate, setFromDate] = useState("");
+    const [untilDate, setUntilDate] = useState("");
 
     const handleStatusChange = (value) => {
         setStatus(value);
@@ -56,29 +59,41 @@ export default function Billing({
                 return ""; // Default background color
         }
     }
-    const handleInputChange = (value, type) => {
-        if (type === "status") {
-            setStatus(value);
-        }
 
-        router.get(
-            route(route().current(), { id: ownerId }),
-            {
-                status: type === "status" ? value : status,
-            },
-            {
-                preserveState: true,
-                replace: true,
-            }
-        );
+    const applyFilters = () => {
+        // Construct the query parameters including status, from_date, and until_date
+        const queryParams = {
+            status: status,
+            from_date: fromDate,
+            until_date: untilDate,
+        };
+
+        // Make the API request to filter the data based on the queryParams
+        router.get(route(route().current(), { id: ownerId }), queryParams, {
+            preserveState: true,
+            replace: true,
+        });
     };
 
-    function getPaginationUrl(baseUrl, statusQuery) {
+    function getPaginationUrl(
+        baseUrl,
+        statusQuery,
+        fromDateQuery,
+        untilDateQuery
+    ) {
         let url = baseUrl;
         const params = [];
 
         if (statusQuery) {
             params.push(`status=${encodeURIComponent(statusQuery)}`);
+        }
+
+        if (fromDateQuery) {
+            params.push(`from_date=${encodeURIComponent(fromDateQuery)}`);
+        }
+
+        if (untilDateQuery) {
+            params.push(`until_date=${encodeURIComponent(untilDateQuery)}`);
         }
 
         // Check if baseUrl already has a query parameter
@@ -90,8 +105,6 @@ export default function Billing({
 
         return url;
     }
-
-    console.log();
 
     const Name = ownerName;
 
@@ -160,12 +173,7 @@ export default function Billing({
                                             id="status"
                                             color="blue"
                                             value={status}
-                                            onChange={(value) =>
-                                                handleInputChange(
-                                                    value,
-                                                    "status"
-                                                )
-                                            }
+                                            onChange={(e) => setStatus(e)}
                                         >
                                             <Option value="">
                                                 Status Pembayaran
@@ -181,16 +189,13 @@ export default function Billing({
                                             </Option>
                                         </Select>
                                     </div>
-                                    {/* <div className="w-52 mr-4 tablet:w-full tablet:mt-5">
+                                    <div className="w-52 mr-4 tablet:w-full tablet:mt-5">
                                         <InputLabel>Dari Tanggal</InputLabel>
                                         <CustomInput
                                             id="from_date"
-                                            onChange={(value) =>
-                                                handleInputChange(
-                                                    value,
-                                                    "from_date"
-                                                )
-                                            }
+                                            onChange={(e) =>
+                                                setFromDate(e.target.value)
+                                            } // Directly set the value
                                             className=""
                                             type="date"
                                         />
@@ -199,16 +204,26 @@ export default function Billing({
                                         <InputLabel>Sampai Tanggal</InputLabel>
                                         <CustomInput
                                             id="until_date"
-                                            onChange={(value) =>
-                                                handleInputChange(
-                                                    value,
-                                                    "status"
-                                                )
-                                            }
+                                            onChange={(e) =>
+                                                setUntilDate(e.target.value)
+                                            } // Directly set the value
                                             className=""
                                             type="date"
                                         />
-                                    </div> */}
+                                    </div>
+                                </div>
+                                <div className="tablet:mr-4">
+                                    <div className="text-red-500 font-extrabold text-sm mobile:text-xs mt-2">
+                                        **Harap isi semua filter di atas untuk
+                                        melakukan filter data
+                                    </div>
+                                    <Button
+                                        className="w-[49rem] mt-4 tablet:w-full tablet:mr-96 bg-white border-primary text-primary"
+                                        variant="outlined"
+                                        onClick={applyFilters}
+                                    >
+                                        Filter
+                                    </Button>
                                 </div>
                             </div>
                             <CardBody className="overflow-scroll px-0">
@@ -242,7 +257,6 @@ export default function Billing({
                                                 (
                                                     {
                                                         id,
-                                                        owner,
                                                         billing_type,
                                                         billing_fee,
                                                         status,
@@ -265,23 +279,6 @@ export default function Billing({
                                                             key={id}
                                                             className="bg-primary/15 hover:bg-primary/5 transition duration-300 text-black"
                                                         >
-                                                            <td
-                                                                className={
-                                                                    classes
-                                                                }
-                                                            >
-                                                                <div className="flex flex-col">
-                                                                    <Typography
-                                                                        variant="small"
-                                                                        className="font-normal capitalize"
-                                                                    >
-                                                                        {
-                                                                            owner.owner_name
-                                                                        }
-                                                                    </Typography>
-                                                                </div>
-                                                            </td>
-
                                                             <td
                                                                 className={
                                                                     classes
@@ -510,8 +507,15 @@ export default function Billing({
                                 prev_page_url={data.prev_page_url}
                                 next_page_url={data.next_page_url}
                                 status={filters.status} // Pass the status filter to the Pagination component
+                                from_date={filters.from_date} // Pass the from_date filter to the Pagination component
+                                until_date={filters.until_date}
                                 getPaginationUrl={(baseUrl) =>
-                                    getPaginationUrl(baseUrl, filters.status)
+                                    getPaginationUrl(
+                                        baseUrl,
+                                        filters.status,
+                                        filters.from_date,
+                                        filters.until_date
+                                    )
                                 }
                             />
                         </Card>
