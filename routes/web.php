@@ -38,6 +38,21 @@ Route::fallback(function () {
     return Inertia::render('NotFoundPage');
 });
 
+Route::get('/unauthorized', function () {
+    return Inertia::render('UnauthorizedPage');
+})->name('unauthorized');
+
+
+// ! SUPER ADMIN ROUTES:
+Route::middleware(['auth', 'verified', 'role:SUPER ADMIN'])->group(function () {
+    // !Apartment
+    Route::get('/apartement', [ApartementController::class, "index"])->name('apartement.index');
+    Route::get('/apartement/add', function () {
+        return Inertia::render('Apartement/AddApartement');
+    })->name('apartement.add');
+    Route::post('/apartement/store', [ApartementController::class, 'store'])->name('apartement.store');
+});
+
 
 Route::middleware('auth')->group(function () {
 
@@ -46,11 +61,6 @@ Route::middleware('auth')->group(function () {
 
 
     // !Apartement
-    Route::get('/apartement/add', function () {
-        return Inertia::render('Apartement/AddApartement');
-    })->name('apartement.add');
-    Route::get('/apartement', [ApartementController::class, 'index'])->name('apartement.index');
-    Route::post('/apartement/store', [ApartementController::class, 'store'])->name('apartement.store');
     Route::get('/apartement/{id}/edit', [ApartementController::class, 'edit'])->name('apartement.edit');
     Route::post('/apartement/{id}/update', [ApartementController::class, 'update'])->name('apartement.update');
 

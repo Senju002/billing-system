@@ -17,6 +17,8 @@ export default function Authenticated({ auth, header, children }) {
         setModalOpen(true);
     };
 
+    console.log(auth.user.role);
+
     useEffect(() => {
         const channel = Echo.channel("owners");
         channel.listen("OwnerChecked", (e) => {
