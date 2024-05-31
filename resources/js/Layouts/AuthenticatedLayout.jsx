@@ -17,7 +17,7 @@ export default function Authenticated({ auth, header, children }) {
         setModalOpen(true);
     };
 
-    console.log(auth.user.role);
+    const Auth = auth.user;
 
     useEffect(() => {
         const channel = Echo.channel("owners");
@@ -57,7 +57,11 @@ export default function Authenticated({ auth, header, children }) {
                             onClose={closeDrawer}
                             className="bg-opacity-0"
                         >
-                            <Sidebar user={auth.user.name} classname="" />
+                            <Sidebar
+                                user={auth.user.name}
+                                classname=""
+                                auth={Auth}
+                            />
                         </Drawer>
                     </div>
 

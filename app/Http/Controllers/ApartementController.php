@@ -50,25 +50,45 @@ class ApartementController extends Controller
 
     public function edit(Apartment $apartment, Request $request)
     {
-        return Inertia::render('Apartement/EditApartement', [
-            "apartementData" => $apartment->find($request->id),
-        ]);
+        $user = Auth::user();
+        $apartmentId = $request->id;
+        $userApartmentId = $user->apartment_id;
+        $role = $user->role;
+
+        if ($role === 'SUPER ADMIN') {
+            return Inertia::render('Apartement/EditApartement', [
+                "apartementData" => $apartment->find($request->id),
+            ]);
+        } else {
+            if ($apartmentId == $userApartmentId) {
+                return Inertia::render('Apartement/EditApartement', [
+                    "apartementData" => $apartment->find($request->id),
+                ]);
+            } else {
+                return redirect('/unauthorized');
+            }
+        }
     }
 
     public function update(Request $request, $id)
     {
-        // Find the apartment by its ID
+        $user = Auth::user();
+
+        $role = $user->role;
+
+
         $apartment = Apartment::findOrFail($id);
 
-        // Validate the incoming data
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:100'],
             'address' => ['required', 'string', 'max:100'],
         ]);
-
-        // Update the apartment with the validated data
         $apartment->update($validatedData);
 
-        return redirect('/apartement')->with('success', 'Apartment data has been updated!');
+        if ($role === 'SUPER ADMIN') {
+            return redirect('/apartement')->with('success', 'Apartment data has been updated!');
+        } else {
+            return redirect()->back()->with('success', 'Apartment data has been updated!');
+        }
     }
 }

@@ -22,12 +22,19 @@ import {
 } from "@heroicons/react/24/outline";
 import ApplicationLogo from "./ApplicationLogo";
 
-export default function Sidebar({ user, classname }) {
+export default function Sidebar({ user, classname, auth }) {
     const [open, setOpen] = useState(0);
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
     };
+
+    const role = auth.role;
+    const apartmentId = auth.apartment_id;
+    const routeName =
+        role === "SUPER ADMIN"
+            ? route("apartement.index")
+            : route("apartement.edit", { id: apartmentId });
 
     return (
         <Card
@@ -77,7 +84,7 @@ export default function Sidebar({ user, classname }) {
                     </ListItem>
                     <AccordionBody className="py-1 ">
                         <List className="p-0 text-textColor ">
-                            <Link href={route("apartement.index")}>
+                            <Link href={routeName}>
                                 <ListItem className="hover:text-primary ">
                                     <ListItemPrefix>
                                         <ChevronRightIcon

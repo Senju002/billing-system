@@ -1,7 +1,7 @@
 import CustomInput from "@/Components/CustomInput";
 import PageHeader from "@/Components/PageHeader";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import {
     Breadcrumbs,
     Button,
@@ -9,6 +9,9 @@ import {
     CardBody,
     Input,
 } from "@material-tailwind/react";
+import { useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function EditApartement({ auth, apartementData }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -16,13 +19,22 @@ export default function EditApartement({ auth, apartementData }) {
         address: apartementData.address,
     });
 
+    const { flash } = usePage().props;
+
     const dataID = apartementData.id;
+    const role = auth.user.role;
 
     // ! Handle submit
     function handleSubmit(e) {
         e.preventDefault();
         post(`/apartement/${dataID}/update`);
     }
+
+    useEffect(() => {
+        if (flash.message) {
+            toast.success(flash.message);
+        }
+    }, [flash.message]);
 
     return (
         <AuthenticatedLayout
@@ -45,16 +57,19 @@ export default function EditApartement({ auth, apartementData }) {
                         >
                             Dashboard
                         </Link>
+                        {role === "SUPER ADMIN" && (
+                            <>
+                                <Link
+                                    href={route("apartement.index")}
+                                    className="opacity-60 text-primaryHover"
+                                >
+                                    Apartment
+                                </Link>
+                            </>
+                        )}
+
                         <Link
-                            href={route("apartement.index")}
-                            className="opacity-60 text-primaryHover "
-                        >
-                            Apartment
-                        </Link>
-                        <Link
-                            href={route("apartement.edit", {
-                                id: dataID,
-                            })}
+                            href={route("apartement.edit", { id: dataID })}
                             className="opacity-100 text-primary font-bold"
                         >
                             Edit Apartment
@@ -115,6 +130,7 @@ export default function EditApartement({ auth, apartementData }) {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </AuthenticatedLayout>
     );
 }
