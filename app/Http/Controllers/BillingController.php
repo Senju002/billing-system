@@ -103,6 +103,8 @@ class BillingController extends Controller
         $user = Auth::user();
         $role = $user->role;
         $apartemntId = $user->apartment_id;
+        $billingData = $billing->find($request->id);
+        $billingApartmentId = $billingData->apartment_id;
 
         $ownerQuery = ApartmentOwner::query();
 
@@ -118,10 +120,21 @@ class BillingController extends Controller
             ->values()
             ->toArray();
 
-        return Inertia::render('Billing/EditBilling', [
-            "billingData" => $billing->find($request->id),
-            'ownerData' => $owner_data,
-        ]);
+        if ($role === 'SUPER ADMIN') {
+            return Inertia::render('Billing/EditBilling', [
+                "billingData" => $billing->find($request->id),
+                'ownerData' => $owner_data,
+            ]);
+        } else {
+            if ($apartemntId == $billingApartmentId) {
+                return Inertia::render('Billing/EditBilling', [
+                    "billingData" => $billing->find($request->id),
+                    'ownerData' => $owner_data,
+                ]);
+            } else {
+                return redirect('/unauthorized');
+            }
+        }
     }
 
     public function update(Request $request, $id)
