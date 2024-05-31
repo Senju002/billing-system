@@ -16,8 +16,7 @@ import { useState } from "react";
 
 export default function Edit({ auth, ownerData, billingData }) {
     const [owner, setOwner] = useState(
-        ownerData.find((item) => item.value === billingData.owner_id) ||
-            ownerData[0]
+        ownerData.find((item) => item.value === billingData.owner_id)
     );
     const [billingType, setBillingType] = useState(billingData.billing_type);
     const [status, setStatus] = useState(billingData.status);

@@ -12,10 +12,14 @@ class BillingController extends Controller
 {
     public function index(Request $request)
     {
-        // dd($request);
+        $user = Auth::user();
+        $role = $user->role;
         return Inertia::render('Billing/Billing', [
             'filters' => $request->only('search', 'status'),  // Include 'status' in the filters
             'data' => Billing::with(['owner', 'createdBy'])
+                ->when($role !== 'SUPER ADMIN', function ($query) use ($user) {
+                    return $query->where('apartment_id', $user->apartment_id);
+                })
                 ->when($request->has('search'), function ($query) use ($request) {
                     $searchTerm = $request->input('search');
                     $query->whereHas('owner', function ($subQuery) use ($searchTerm) {
@@ -34,9 +38,23 @@ class BillingController extends Controller
     public function add()
     {
 
-        $owner_data = ApartmentOwner::pluck('owner_name', 'id')->map(function ($ownerName, $apartementId) {
-            return ['label' => $ownerName, 'value' => $apartementId];
-        })->prepend(['label' => 'Pilih Owner', 'value' => ''])->values()->toArray();
+        $user = Auth::user();
+        $role = $user->role;
+        $apartemntId = $user->apartment_id;
+
+        $ownerQuery = ApartmentOwner::query();
+
+        if ($role !== 'SUPER ADMIN') {
+            $ownerQuery->where('apartment_id', $apartemntId);
+        }
+
+        $owner_data = $ownerQuery->pluck('owner_name', 'id')
+            ->map(function ($ownerName, $ownerId) {
+                return ['label' => $ownerName, 'value' => $ownerId];
+            })
+            ->prepend(['label' => 'Pilih Owner', 'value' => ''])
+            ->values()
+            ->toArray();
 
 
         return Inertia::render("Billing/AddBilling", [
@@ -67,17 +85,38 @@ class BillingController extends Controller
         // Add user_id to the validated data from the authenticated user
         $validatedData['created_by'] = Auth::id();
 
+        $ownerId = $request->input('owner_id');
+        $owner = ApartmentOwner::findOrFail($ownerId);
+        $apartemntId = $owner->apartment_id;
+        $validatedData['apartment_id'] = $apartemntId;
+
         // Store the validated data in the billing table
         $billing = Billing::create($validatedData);
+
+        // dd($billing);
 
         return redirect('/billing')->with('success', 'New Billing has been created!');
     }
 
     public function edit(Billing $billing, Request $request)
     {
-        $owner_data = ApartmentOwner::pluck('owner_name', 'id')->map(function ($ownerName, $apartementId) {
-            return ['label' => $ownerName, 'value' => $apartementId];
-        })->prepend(['label' => 'Pilih Owner', 'value' => ''])->values()->toArray();
+        $user = Auth::user();
+        $role = $user->role;
+        $apartemntId = $user->apartment_id;
+
+        $ownerQuery = ApartmentOwner::query();
+
+        if ($role !== 'SUPER ADMIN') {
+            $ownerQuery->where('apartment_id', $apartemntId);
+        }
+
+        $owner_data = $ownerQuery->pluck('owner_name', 'id')
+            ->map(function ($ownerName, $ownerId) {
+                return ['label' => $ownerName, 'value' => $ownerId];
+            })
+            ->prepend(['label' => 'Pilih Owner', 'value' => ''])
+            ->values()
+            ->toArray();
 
         return Inertia::render('Billing/EditBilling', [
             "billingData" => $billing->find($request->id),
@@ -124,7 +163,10 @@ class BillingController extends Controller
             $validatedData['is_paid'] = 1;
         }
 
-        // dd($validatedData); // Debugging the validated data
+        $ownerId = $request->input('owner_id');
+        $owner = ApartmentOwner::findOrFail($ownerId);
+        $apartemntId = $owner->apartment_id;
+        $validatedData['apartment_id'] = $apartemntId;
 
         // Update the billing record
         $billing->update($validatedData);
@@ -137,6 +179,5 @@ class BillingController extends Controller
         $billing = Billing::find($request->id);
         $billing->delete();
         return redirect('/billing')->with('success', 'Billing data has been deleted!');
-
     }
 }
