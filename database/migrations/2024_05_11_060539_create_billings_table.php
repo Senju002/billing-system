@@ -28,6 +28,8 @@ return new class extends Migration
             $table->enum('status', ['Pending', 'Success', 'Cancel'])->default('Pending');
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('apartment_id')->nullable();
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
             $table->timestamps();
         });
     }
