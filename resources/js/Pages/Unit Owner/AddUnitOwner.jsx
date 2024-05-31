@@ -13,12 +13,18 @@ import {
 import { useState } from "react";
 
 export default function AddUnitOwner({ auth, apartmenetData }) {
+    const role = auth.user.role;
+    const aprtId = apartmenetData.find(
+        (item) => item.value === auth.user.apartment_id
+    );
+
     const { data, setData, post, processing, errors } = useForm({
         owner_name: "",
         phone: "",
         email: "",
         identity_no: "",
         room_no: "",
+        apartment_id: role === "SUPER ADMIN" ? "" : aprtId.value,
     });
 
     const [apartment, setApartment] = useState(apartmenetData[0]);
@@ -122,11 +128,22 @@ export default function AddUnitOwner({ auth, apartmenetData }) {
 
                                     <div className="flex flex-row justify-start tablet:flex-col mt-8">
                                         <div className="flex flex-col w-full mr-4">
-                                            <InputSelect
-                                                value={apartment}
-                                                onChange={handleApartmentChange}
-                                                options={apartmenetData}
-                                            />
+                                            {role === "SUPER ADMIN" ? (
+                                                <InputSelect
+                                                    value={apartment}
+                                                    onChange={
+                                                        handleApartmentChange
+                                                    }
+                                                    options={apartmenetData}
+                                                />
+                                            ) : (
+                                                <CustomInput
+                                                    label="Nama Apartemen"
+                                                    value={aprtId.label}
+                                                    className=""
+                                                    disabled={true}
+                                                />
+                                            )}
                                             {errors.apartment_id && (
                                                 <p className="text-red-500 text-sm ml-0 mt-3">
                                                     {errors.apartment_id}

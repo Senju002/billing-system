@@ -32,7 +32,6 @@ export default function UnitOwner({ auth, errors, data, filters }) {
     const { flash } = usePage().props;
 
     function handleSearch(event) {
-        console.log(event.target.value);
         router.get(
             route(route().current()),
             { search: event.target.value },
@@ -60,8 +59,6 @@ export default function UnitOwner({ auth, errors, data, filters }) {
             toast.success(flash.message);
         }
     }, [flash.message]);
-
-    console.log(data.data);
 
     return (
         <AuthenticatedLayout

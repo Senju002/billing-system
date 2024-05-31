@@ -13,22 +13,29 @@ import {
 import { useState } from "react";
 
 export default function EditUnitOwner({ auth, apartmenetData, unitOwnerData }) {
+    const role = auth.user.role;
+    const aprtId = apartmenetData.find(
+        (item) => item.value === auth.user.apartment_id
+    );
     const { data, setData, post, processing, errors } = useForm({
         owner_name: unitOwnerData.owner_name,
         phone: unitOwnerData.phone,
         email: unitOwnerData.email,
         identity_no: unitOwnerData.identity_no,
         room_no: unitOwnerData.room_no,
-        apartment_id: unitOwnerData.apartment_id,
+        apartment_id:
+            role === "SUPER ADMIN" ? unitOwnerData.apartment_id : aprtId.value,
     });
 
-    const [apartment, setApartment] = useState(
-        apartmenetData.find(
-            (item) => item.value === unitOwnerData.apartment_id
-        ) || apartmenetData[0]
-    );
+    // const [apartment, setApartment] = useState(
+    //     apartmenetData.find(
+    //         (item) => item.value === unitOwnerData.apartment_id
+    //     ) || apartmenetData[0]
+    // );
 
-    console.log(data);
+    const [apartment, setApartment] = useState(
+        apartmenetData.find((item) => item.value === unitOwnerData.apartment_id)
+    );
 
     const handleApartmentChange = (value) => {
         setApartment(value);
@@ -131,11 +138,22 @@ export default function EditUnitOwner({ auth, apartmenetData, unitOwnerData }) {
 
                                     <div className="flex flex-row justify-start tablet:flex-col mt-8">
                                         <div className="flex flex-col w-full mr-4">
-                                            <InputSelect
-                                                value={apartment}
-                                                onChange={handleApartmentChange}
-                                                options={apartmenetData}
-                                            />
+                                            {role === "SUPER ADMIN" ? (
+                                                <InputSelect
+                                                    value={apartment}
+                                                    onChange={
+                                                        handleApartmentChange
+                                                    }
+                                                    options={apartmenetData}
+                                                />
+                                            ) : (
+                                                <CustomInput
+                                                    label="Nama Apartemen"
+                                                    value={aprtId.label}
+                                                    className=""
+                                                    disabled={true}
+                                                />
+                                            )}
                                             {errors.apartment_id && (
                                                 <p className="text-red-500 text-sm ml-0 mt-3">
                                                     {errors.apartment_id}
