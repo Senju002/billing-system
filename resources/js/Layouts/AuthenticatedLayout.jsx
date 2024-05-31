@@ -19,11 +19,21 @@ export default function Authenticated({ auth, header, children }) {
 
     const Auth = auth.user;
 
+    const userApartmentId = Auth.apartment_id;
+    const role = Auth.role;
+
     useEffect(() => {
         const channel = Echo.channel("owners");
         channel.listen("OwnerChecked", (e) => {
             console.log(e.data);
-            handleOpenModal(e.data);
+            const ownerApartmentId = e.data.apartment_id;
+            if (role === "SUPER ADMIN") {
+                handleOpenModal(e.data);
+            } else {
+                if (userApartmentId === ownerApartmentId) {
+                    handleOpenModal(e.data);
+                }
+            }
         });
 
         return () => {

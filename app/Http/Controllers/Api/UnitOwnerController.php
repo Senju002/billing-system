@@ -22,7 +22,8 @@ class UnitOwnerController extends Controller
                 'identity_no' => $owner->identity_no,
                 'phone' => $owner->phone,
                 'room_no' => $owner->room_no,
-                'apartment' => $owner->apartment ? $owner->apartment->name : null
+                'apartment' => $owner->apartment ? $owner->apartment->name : null,
+                'apartment_id' => $owner->apartment_id,
 
             ];
             Broadcast::event(new OwnerChecked($response)); // Custom event
