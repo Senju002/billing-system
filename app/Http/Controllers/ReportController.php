@@ -106,6 +106,11 @@ class ReportController extends Controller
         // Fetch the owner name based on the user_id
         $ownerName = ApartmentOwner::where('id', $userId)->value('owner_name');
 
+        $user = Auth::user();
+        $role = $user->role;
+        $apartemntId = $user->apartment_id;
+        $ownerApartId = ApartmentOwner::where('id', $userId)->value('apartment_id');
+
         // Initialize the query builder with basic conditions
         $query = DB::table('billings')
             ->where('owner_id', $userId)
@@ -137,12 +142,26 @@ class ReportController extends Controller
         // Fetch data with pagination
         $data = $query->paginate(20);
 
-        // Pass the fetched data to the Inertia component
-        return Inertia::render('Report/OwnerBillingHistory', [
-            "data" => $data,
-            'filters' => $request->only('status', 'from_date', 'until_date'),
-            'ownerId' => $userId,
-            'ownerName' => $ownerName,
-        ]);
+        if ($role === 'SUPER ADMIN') {
+            // Pass the fetched data to the Inertia component
+            return Inertia::render('Report/OwnerBillingHistory', [
+                "data" => $data,
+                'filters' => $request->only('status', 'from_date', 'until_date'),
+                'ownerId' => $userId,
+                'ownerName' => $ownerName,
+            ]);
+        } else {
+            if ($apartemntId == $ownerApartId) {
+                // Pass the fetched data to the Inertia component
+                return Inertia::render('Report/OwnerBillingHistory', [
+                    "data" => $data,
+                    'filters' => $request->only('status', 'from_date', 'until_date'),
+                    'ownerId' => $userId,
+                    'ownerName' => $ownerName,
+                ]);
+            } else {
+                return redirect('/unauthorized');
+            }
+        }
     }
 }
