@@ -14,6 +14,7 @@ export default function AddApartement({ auth }) {
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         address: "",
+        total_room: "",
     });
 
     // ! Handle submit
@@ -91,6 +92,20 @@ export default function AddApartement({ auth }) {
                                                 )
                                             }
                                             errors={errors.address}
+                                            className="tablet:mt-8"
+                                        />
+                                        <CustomInput
+                                            type="number"
+                                            label="Total Kamar"
+                                            id="total_room"
+                                            value={data.total_room}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "total_room",
+                                                    e.target.value
+                                                )
+                                            }
+                                            errors={errors.total_room}
                                             className="tablet:mt-8"
                                         />
                                     </div>

@@ -37,6 +37,7 @@ class ApartementController extends Controller
                 'string',
                 'max:100',
             ],
+            'total_room' => ['required', 'integer', 'min:10', 'max:99999'],
         ]);
 
         // Add user_id to the validated data from the authenticated user
@@ -82,6 +83,7 @@ class ApartementController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:100'],
             'address' => ['required', 'string', 'max:100'],
+            'total_room' => ['required', 'integer', 'min:10', 'max:99999'],
         ]);
         $apartment->update($validatedData);
 

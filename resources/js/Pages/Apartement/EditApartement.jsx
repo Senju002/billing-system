@@ -17,6 +17,7 @@ export default function EditApartement({ auth, apartementData }) {
     const { data, setData, post, processing, errors } = useForm({
         name: apartementData.name,
         address: apartementData.address,
+        total_room: apartementData.total_room,
     });
 
     const { flash } = usePage().props;
@@ -108,6 +109,20 @@ export default function EditApartement({ auth, apartementData }) {
                                                 )
                                             }
                                             errors={errors.address}
+                                            className="tablet:mt-8"
+                                        />
+                                        <CustomInput
+                                            type="number"
+                                            label="Total Kamar"
+                                            id="total_room"
+                                            value={data.total_room}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "total_room",
+                                                    e.target.value
+                                                )
+                                            }
+                                            errors={errors.total_room}
                                             className="tablet:mt-8"
                                         />
                                     </div>
