@@ -20,7 +20,7 @@ class ApartmentSeeder extends Seeder
         $faker = Faker::create();
 
         // Define the number of apartments you want to generate
-        $numberOfApartments = 10;
+        $numberOfApartments = 2;
 
         for ($i = 0; $i < $numberOfApartments; $i++) {
             // Generate fake data for each apartment

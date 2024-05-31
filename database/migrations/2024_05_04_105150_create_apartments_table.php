@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('address');
+            $table->integer('total_room')->nullable();
             $table->unsignedBigInteger('created_by'); // Foreign key to users table
             $table->timestamps();
 

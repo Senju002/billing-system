@@ -29,7 +29,7 @@ class ApartmentOwnerSeeder extends Seeder
                 'phone' => $faker->phoneNumber,
                 'email' => $faker->unique()->safeEmail,
                 'identity_no' => $faker->randomNumber(8),
-                'apartment_id' => $faker->numberBetween(1, 10), // Assuming there are 10 apartments
+                'apartment_id' => $faker->numberBetween(1, 2), // Assuming there are 3 apartments
                 'room_no' => $faker->numberBetween(1, 100), // Assuming there are 100 rooms
                 'created_by' => $faker->numberBetween(1, 1), // Assuming there are 10 users
             ]);
