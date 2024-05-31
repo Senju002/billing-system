@@ -20,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 const TABLE_HEAD = [
     "Nama Apartemen",
     "Alamat",
+    "Total Kamar",
     "Dibuat Pada Tanggal",
     "Dibuat Oleh",
     "Edit",
@@ -131,6 +132,7 @@ export default function Apartement({ auth, errors, data, filters }) {
                                                     created_at,
                                                     id,
                                                     address,
+                                                    total_room,
                                                     user,
                                                 },
                                                 index
@@ -165,6 +167,17 @@ export default function Apartement({ auth, errors, data, filters }) {
                                                                     className="font-normal capitalize"
                                                                 >
                                                                     {address}
+                                                                </Typography>
+                                                            </div>
+                                                        </td>
+
+                                                        <td className={classes}>
+                                                            <div className="flex flex-col">
+                                                                <Typography
+                                                                    variant="small"
+                                                                    className="font-normal capitalize"
+                                                                >
+                                                                    {total_room}
                                                                 </Typography>
                                                             </div>
                                                         </td>
