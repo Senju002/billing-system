@@ -1,13 +1,18 @@
 import { Link } from "@inertiajs/react";
 import { CardBody, Typography } from "@material-tailwind/react";
+import moment from "moment";
 import React from "react";
 const TABLE_HEAD = ["Nama Owner", "Jenis Tagihan", "Biaya Tagihan"];
 export default function CustomTable({ data, title, route }) {
+    const currentMonthYear = moment().format("MMMM, YYYY");
     return (
         <>
             <div className="w-full h-full">
                 <h1 className="text-center p-2 font-bold text-primary">
                     {title}
+                </h1>
+                <h1 className="text-center font-bold text-primary">
+                    Periode {currentMonthYear}
                 </h1>
                 <CardBody className="overflow-scroll px-0 h-60 w-full">
                     <table
