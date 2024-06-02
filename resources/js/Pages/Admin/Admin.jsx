@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import {
     Card,
     Typography,
@@ -8,11 +8,7 @@ import {
     Tooltip,
     Breadcrumbs,
 } from "@material-tailwind/react";
-import {
-    FolderPlusIcon,
-    PencilIcon,
-    TrashIcon,
-} from "@heroicons/react/24/solid";
+import { FolderPlusIcon, PencilIcon } from "@heroicons/react/24/solid";
 import { router, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import Pagination from "@/Components/Pagination";
@@ -23,7 +19,7 @@ import InputLabel from "@/Components/InputLabel";
 import InputSelect from "@/Components/InputSelect";
 import { WrenchIcon } from "@heroicons/react/24/outline";
 
-const TABLE_HEAD = ["Nama", "Email", "Apartemen", "Change Password", "Edit"];
+const TABLE_HEAD = ["Nama", "Email", "Apartemen", "Edit"];
 
 export default function Admin({ auth, errors, data, filters, apartmenetData }) {
     const { flash } = usePage().props;
@@ -226,32 +222,9 @@ export default function Admin({ auth, errors, data, filters, apartmenetData }) {
                                                         </td>
 
                                                         <td className={classes}>
-                                                            <Tooltip
-                                                                content="Reset Password"
-                                                                animate={{
-                                                                    mount: {
-                                                                        scale: 1,
-                                                                        y: 0,
-                                                                    },
-                                                                    unmount: {
-                                                                        scale: 0,
-                                                                        y: 25,
-                                                                    },
-                                                                }}
-                                                                className="bg-orange-600 "
-                                                            >
-                                                                <IconButton
-                                                                    variant="fill"
-                                                                    color="orange"
-                                                                >
-                                                                    <WrenchIcon className="h-4 w-4" />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                        </td>
-                                                        <td className={classes}>
                                                             <Link
                                                                 href={route(
-                                                                    "billing.edit",
+                                                                    "admin.edit",
                                                                     {
                                                                         id: id,
                                                                     }
@@ -263,7 +236,7 @@ export default function Admin({ auth, errors, data, filters, apartmenetData }) {
                                                                 as="button"
                                                             >
                                                                 <Tooltip
-                                                                    content="Edit Billing"
+                                                                    content="Edit Admin"
                                                                     animate={{
                                                                         mount: {
                                                                             scale: 1,

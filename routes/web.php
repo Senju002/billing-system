@@ -59,6 +59,7 @@ Route::middleware(['auth', 'verified', 'role:SUPER ADMIN'])->group(function () {
     Route::post('/admin/store', [AdminController::class, 'store'])->name('admin.store');
     Route::get('/admin/{id}/edit', [AdminController::class, 'edit'])->name('admin.edit');
     Route::post('/admin/{id}/update', [AdminController::class, 'update'])->name('admin.update');
+    Route::post('/admin-reset-password', [AdminController::class, "resetPassword"])->middleware(['auth', 'verified'])->name('admin.reset');
 });
 
 
