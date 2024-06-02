@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApartementController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\DashboardController;
@@ -51,6 +52,13 @@ Route::middleware(['auth', 'verified', 'role:SUPER ADMIN'])->group(function () {
         return Inertia::render('Apartement/AddApartement');
     })->name('apartement.add');
     Route::post('/apartement/store', [ApartementController::class, 'store'])->name('apartement.store');
+
+    // !Admin 
+    Route::get('/admin/add', [AdminController::class, 'add'])->name('admin.add');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::post('/admin/store', [AdminController::class, 'store'])->name('admin.store');
+    Route::get('/admin/{id}/edit', [AdminController::class, 'edit'])->name('admin.edit');
+    Route::post('/admin/{id}/update', [AdminController::class, 'update'])->name('admin.update');
 });
 
 

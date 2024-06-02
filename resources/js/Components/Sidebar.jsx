@@ -84,6 +84,19 @@ export default function Sidebar({ user, classname, auth }) {
                     </ListItem>
                     <AccordionBody className="py-1 ">
                         <List className="p-0 text-textColor ">
+                            {role === "SUPER ADMIN" && (
+                                <Link href={route("admin.index")}>
+                                    <ListItem className="hover:text-primary ">
+                                        <ListItemPrefix>
+                                            <ChevronRightIcon
+                                                strokeWidth={3}
+                                                className="h-3 w-5"
+                                            />
+                                        </ListItemPrefix>
+                                        Admin
+                                    </ListItem>
+                                </Link>
+                            )}
                             <Link href={routeName}>
                                 <ListItem className="hover:text-primary ">
                                     <ListItemPrefix>
@@ -95,6 +108,7 @@ export default function Sidebar({ user, classname, auth }) {
                                     Apartment
                                 </ListItem>
                             </Link>
+
                             <Link href={route("unitowner.index")}>
                                 <ListItem className="hover:text-primary ">
                                     <ListItemPrefix>
