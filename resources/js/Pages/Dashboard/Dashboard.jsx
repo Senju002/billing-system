@@ -31,6 +31,8 @@ export default function Dashboard({
     };
 
     const noData = billingChartData[0].count;
+    const noData2 = billingChartData[1].count;
+    const noData3 = billingChartData[2].count;
 
     const BillingChartData = {
         labels: ["Telah Lunas", "Belum Lunas", "Belum Lunas dan terkena Denda"],
@@ -127,7 +129,9 @@ export default function Dashboard({
 
                             <div className="h-full laptop:h-full flex flex-col tablet:flex-col gap-8 laptop:gap-0 mt-8 rounded-3xl shadow-[0_1px_50px_#c3b0f7] p-6 overflow-x-auto overflow-y-auto">
                                 <BillingPieContainer name="Grafik Tagihan IPL Bulan Ini">
-                                    {noData !== 0 ? (
+                                    {noData !== 0 ||
+                                    noData2 !== 0 ||
+                                    noData3 !== 0 ? (
                                         <Pie
                                             options={options}
                                             data={BillingChartData}
