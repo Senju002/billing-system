@@ -47,6 +47,11 @@ class User extends Authenticatable
         return $this->hasMany(Apartment::class, 'created_by');
     }
 
+    public function apartment()
+    {
+        return $this->belongsTo(Apartment::class);
+    }
+
     // public function apartment()
     // {
     //     return $this->belongsTo(Apartment::class);
