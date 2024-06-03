@@ -33,6 +33,18 @@ class UnitOwnerController extends Controller
 
     public function add()
     {
+        $user = Auth::user();
+        $apartId = $user->apartment_id;
+        $apar = Apartment::find($apartId);
+
+        // Check if apartment is found
+        if ($apar) {
+            $apartName = $apar->name; // Assuming the column name is 'name'
+        } else {
+            // Handle the case where the apartment is not found
+            $apartName = 'Apartment not found';
+        }
+
 
         $apartment = Apartment::pluck('name', 'id')->map(function ($apartmentName, $apartementId) {
             return ['label' => $apartmentName, 'value' => $apartementId];
@@ -41,6 +53,8 @@ class UnitOwnerController extends Controller
 
         return Inertia::render("Unit Owner/AddUnitOwner", [
             'apartmenetData' => $apartment,
+            'apartId' => $apartId,
+            'apartName' => $apartName,
         ]);
     }
 
@@ -80,16 +94,31 @@ class UnitOwnerController extends Controller
         $userApartmentId = $user->apartment_id;
         $role = $user->role;
 
+        $apartId = $user->apartment_id;
+        $apar = Apartment::find($apartId);
+
+        // Check if apartment is found
+        if ($apar) {
+            $apartName = $apar->name; // Assuming the column name is 'name'
+        } else {
+            // Handle the case where the apartment is not found
+            $apartName = 'Apartment not found';
+        }
+
         if ($role === 'SUPER ADMIN') {
             return Inertia::render('Unit Owner/EditUnitOwner', [
                 "unitOwnerData" => $apartmentOwner->find($request->id),
                 'apartmenetData' => $apartment,
+                'apartId' => $apartId,
+                'apartName' => $apartName,
             ]);
         } else {
             if ($userApartmentId == $unitOwnerApartmentData) {
                 return Inertia::render('Unit Owner/EditUnitOwner', [
                     "unitOwnerData" => $apartmentOwner->find($request->id),
                     'apartmenetData' => $apartment,
+                    'apartId' => $apartId,
+                    'apartName' => $apartName,
                 ]);
             } else {
                 return redirect('/unauthorized');

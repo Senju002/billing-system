@@ -12,11 +12,15 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 
-export default function EditUnitOwner({ auth, apartmenetData, unitOwnerData }) {
+export default function EditUnitOwner({
+    auth,
+    apartmenetData,
+    unitOwnerData,
+    apartId,
+    apartName,
+}) {
     const role = auth.user.role;
-    const aprtId = apartmenetData.find(
-        (item) => item.value === auth.user.apartment_id
-    );
+
     const { data, setData, post, processing, errors } = useForm({
         owner_name: unitOwnerData.owner_name,
         phone: unitOwnerData.phone,
@@ -24,7 +28,7 @@ export default function EditUnitOwner({ auth, apartmenetData, unitOwnerData }) {
         identity_no: unitOwnerData.identity_no,
         room_no: unitOwnerData.room_no,
         apartment_id:
-            role === "SUPER ADMIN" ? unitOwnerData.apartment_id : aprtId.value,
+            role === "SUPER ADMIN" ? unitOwnerData.apartment_id : apartId,
     });
 
     // const [apartment, setApartment] = useState(
@@ -33,9 +37,15 @@ export default function EditUnitOwner({ auth, apartmenetData, unitOwnerData }) {
     //     ) || apartmenetData[0]
     // );
 
-    const [apartment, setApartment] = useState(
-        apartmenetData.find((item) => item.value === unitOwnerData.apartment_id)
+    // const [apartment, setApartment] = useState(
+    //     apartmenetData.find((item) => item.value === unitOwnerData.apartment_id)
+    // );
+    const initialApartment = apartmenetData.find(
+        (apartment) => apartment.value === unitOwnerData.apartment_id
     );
+
+    // Set the initial state
+    const [apartment, setApartment] = useState(initialApartment);
 
     const handleApartmentChange = (value) => {
         setApartment(value);
@@ -149,7 +159,7 @@ export default function EditUnitOwner({ auth, apartmenetData, unitOwnerData }) {
                                             ) : (
                                                 <CustomInput
                                                     label="Nama Apartemen"
-                                                    value={aprtId.label}
+                                                    value={apartName}
                                                     className=""
                                                     disabled={true}
                                                 />

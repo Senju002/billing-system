@@ -12,11 +12,13 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 
-export default function AddUnitOwner({ auth, apartmenetData }) {
+export default function AddUnitOwner({
+    auth,
+    apartmenetData,
+    apartId,
+    apartName,
+}) {
     const role = auth.user.role;
-    const aprtId = apartmenetData.find(
-        (item) => item.value === auth.user.apartment_id
-    );
 
     const { data, setData, post, processing, errors } = useForm({
         owner_name: "",
@@ -24,7 +26,7 @@ export default function AddUnitOwner({ auth, apartmenetData }) {
         email: "",
         identity_no: "",
         room_no: "",
-        apartment_id: role === "SUPER ADMIN" ? "" : aprtId.value,
+        apartment_id: role === "SUPER ADMIN" ? "" : apartId,
     });
 
     const [apartment, setApartment] = useState(apartmenetData[0]);
@@ -139,7 +141,7 @@ export default function AddUnitOwner({ auth, apartmenetData }) {
                                             ) : (
                                                 <CustomInput
                                                     label="Nama Apartemen"
-                                                    value={aprtId.label}
+                                                    value={apartName}
                                                     className=""
                                                     disabled={true}
                                                 />
