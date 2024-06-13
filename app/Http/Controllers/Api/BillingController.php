@@ -57,4 +57,52 @@ class BillingController extends Controller
             return response()->json(['message' => 'Email kamu belum terdaftar pada billing sistem'], 404);
         }
     }
+
+    public function billingHistory(Request $request)
+    {
+        $email = $request->input('email');
+
+        // Find the apartment owner based on the provided email
+        $apartmentOwner = ApartmentOwner::where('email', $email)->first();
+
+        if ($apartmentOwner) {
+            // Retrieve all billing records where owner_id matches $apartmentOwner->id and status is 'pending'
+            $billings = Billing::where('owner_id', $apartmentOwner->id)
+                ->where('status', 'Success')
+                ->get();
+
+            foreach ($billings as $billing) {
+                $dueDate = Carbon::parse($billing->due_date);
+                $paidDate = Carbon::parse($billing->paid_date);
+
+                // Compare due_date with today's date
+                $daysUntilDue = $dueDate->diffInDays($paidDate, false); // Calculate difference in days
+
+                // dd($daysUntilDue);
+
+                if ($daysUntilDue <= 0) {
+                    // If due_date has passed or is today, set fine to 0
+                    $billing->fine = 0;
+                } else {
+                    // Otherwise, keep the original fine value from the database
+                    // No action needed since fine is already fetched from the database
+                }
+            }
+
+            // Prepare the data to return
+            $data = [
+                'owner_data' => $apartmentOwner,
+                'billing_data' => $billings,
+            ];
+
+            // Check if there are any billing records found
+            if ($billings->isEmpty()) {
+                return response()->json(['message' => 'Riwayat pembayaran tidak tersedia'], 404);
+            } else {
+                return response()->json($data);
+            }
+        } else {
+            return response()->json(['message' => 'Email kamu belum terdaftar pada billing sistem'], 404);
+        }
+    }
 }

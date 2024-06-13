@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/unit-owner', [UnitOwnerController::class, 'checkOwner']);
 Route::get('/billing', [BillingController::class, 'getBilling']);
+Route::get('/billing-history', [BillingController::class, 'billingHistory']);
 Route::get('/', function () {
     return response()->json(['message' => 'Welcome to the API'], 200);
 });
