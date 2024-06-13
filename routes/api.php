@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BillingController;
 use App\Http\Controllers\Api\UnitOwnerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/unit-owner', [UnitOwnerController::class, 'checkOwner']);
+Route::get('/billing', [BillingController::class, 'getBilling']);
 Route::get('/', function () {
     return response()->json(['message' => 'Welcome to the API'], 200);
 });
